@@ -8,14 +8,23 @@
         <div class="sqButton x"></div>
       </div>
     </div>
+    <div class="contentContainer">
+      <MessageHistory />
+      <textarea name="" class="composeArea" id=""></textarea>
+      <!-- <input type="text" class="composeArea" /> -->
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import MessageHistory from "@/components/MessageHistory.vue";
 
 export default Vue.extend({
   name: "HelloWorld",
+  components: {
+    MessageHistory
+  },
   props: {
     msg: String
   }
@@ -26,6 +35,25 @@ export default Vue.extend({
 <style scoped lang="scss">
 $topRightButtonGrey: #d6d6ce;
 $windowGeneralGrey: #c0c0c0;
+
+.contentContainer {
+  width: 98%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  padding: 5px;
+}
+
+.composeArea {
+  height: 30%;
+  border: 1px solid black;
+  user-select: none;
+  resize: vertical;
+}
+.composeArea:focus {
+  outline: none;
+}
 .windowTitle {
   color: white;
   width: 50%;
@@ -38,7 +66,8 @@ $windowGeneralGrey: #c0c0c0;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  min-height: 300px;
+  height: 400px;
+  width: 500px;
   background-color: $windowGeneralGrey;
   padding: 3px;
   box-shadow: 1px 1px 0 0 #424242;
@@ -47,6 +76,7 @@ $windowGeneralGrey: #c0c0c0;
   border-bottom-color: #848484;
   background: silver;
   padding: 2px;
+  align-items: center;
 }
 
 .sqButtonContainer {
@@ -83,35 +113,13 @@ $windowGeneralGrey: #c0c0c0;
 .windowTopBar {
   flex-direction: row;
   display: flex;
-  // background-image: -webkit-linear-gradient(
-  //   left,
-  //   rgb(8, 33, 107),
-  //   rgb(165, 206, 247)
-  // );
+  background-image: -webkit-linear-gradient(
+    left,
+    rgb(8, 33, 107),
+    rgb(165, 206, 247)
+  );
   height: 20px;
   width: 100%;
   align-items: center;
-  background: #000080; /* fallback to standard color */
-  background: -moz-linear-gradient(left, #000080 0%, #1084d0 100%); /* FF3.6+ */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(0%, #000080),
-    color-stop(100%, #1084d0)
-  ); /* Chrome, Safari4+ */
-  background: -webkit-linear-gradient(
-    left,
-    #000080 0%,
-    #1084d0 100%
-  ); /* Chrome10+, Safari5.1+ */
-  background: -o-linear-gradient(
-    left,
-    #000080 0%,
-    #1084d0 100%
-  ); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #000080 0%, #1084d0 100%); /* IE10+ */
-  background: linear-gradient(to right, #000080 0%, #1084d0 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000080', endColorstr='#1084d0', GradientType=1 ); /* IE6-9 */
 }
 </style>
