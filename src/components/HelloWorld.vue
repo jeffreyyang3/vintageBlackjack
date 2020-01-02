@@ -10,7 +10,8 @@
     </div>
     <div class="contentContainer">
       <MessageHistory />
-      <textarea name="" class="composeArea" id=""></textarea>
+
+      <MessageCompose />
       <!-- <input type="text" class="composeArea" /> -->
     </div>
   </div>
@@ -19,11 +20,13 @@
 <script lang="ts">
 import Vue from "vue";
 import MessageHistory from "@/components/MessageHistory.vue";
+import MessageCompose from "@/components/MessageCompose.vue";
 
 export default Vue.extend({
   name: "HelloWorld",
   components: {
-    MessageHistory
+    MessageHistory,
+    MessageCompose
   },
   props: {
     msg: String
@@ -46,17 +49,6 @@ $windowGeneralGrey: #c0c0c0;
   padding: 5px;
 }
 
-.composeArea {
-  height: 30%;
-  border: 1px solid black;
-  user-select: none;
-  resize: vertical;
-  font-size: 115%;
-  font-family: "Times New Roman", Times, serif;
-}
-.composeArea:focus {
-  outline: none;
-}
 .windowTitle {
   color: white;
   width: 50%;

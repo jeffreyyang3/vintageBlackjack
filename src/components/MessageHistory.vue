@@ -1,9 +1,12 @@
 <template>
   <div class="messageHistoryBox">
-    <div class="message" v-for="msg in history" :key="msg.name + msg.date">
+    <div
+      class="message"
+      v-for="msg in displayedMessages"
+      :key="msg.name + msg.date"
+    >
       <span class="userName me">{{ msg.name }}:</span>
-      <span class="msgContent"> {{ msg.text }}:</span>
-
+      <span class="msgContent"> {{ msg.text }}</span>
       <!-- {{ msg.text }} -->
     </div>
   </div>
@@ -25,7 +28,7 @@
 .messageHistoryBox {
   font-family: "Times New Roman", Times, serif;
   border: 1px solid black;
-  height: 40%;
+  height: 50%;
   background-color: white;
 }
 </style>
@@ -48,20 +51,7 @@ export default Vue.extend({
   data: function() {
     const old = new Date();
     old.setDate(old.getDate() - 5);
-    return {
-      history: [
-        {
-          name: "userName1",
-          text: "asdf asdfa asdf asdf asdfa asdf daf",
-          sendDate: old
-        },
-        {
-          name: "userName2",
-          text: "dfd asdf adf fdfd asd as",
-          sendDate: new Date()
-        }
-      ]
-    };
+    return {};
   }
 });
 </script>

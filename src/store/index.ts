@@ -6,7 +6,7 @@ const state: {
   displayedMessages: Array<{
     name: string;
     text: string;
-    sendDate: Date;
+    // sendDate: Date;
   }>;
   currentUsername: string;
 } = {
