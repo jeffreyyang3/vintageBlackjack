@@ -1,20 +1,27 @@
 <template>
-  <div class="messageHistoryBox"></div>
+  <div class="messageHistoryBox">
+    <div class="message" v-for="msg in history" :key="msg.name + msg.date">
+      <span class="userName me">{{ msg.name }}:</span>
+      <span class="msgContent"> {{ msg.text }}:</span>
+
+      <!-- {{ msg.text }} -->
+    </div>
+  </div>
 </template>
-
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "MessageHistory",
-  props: {
-    msg: String
-  }
-});
-</script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.userName {
+  font-weight: bold;
+  font-size: 115%;
+}
+
+.userName.other {
+  color: red;
+}
+
+.userName.me {
+  color: blue;
+}
 .messageHistoryBox {
   font-family: "Times New Roman", Times, serif;
   border: 1px solid black;
@@ -22,3 +29,39 @@ export default Vue.extend({
   background-color: white;
 }
 </style>
+
+<script lang="ts">
+import Vue from "vue";
+import { mapState } from "vuex";
+
+export default Vue.extend({
+  name: "MessageHistory",
+  props: {
+    msg: String
+  },
+  computed: {
+    ...mapState(["displayedMessages"])
+  },
+  mounted() {
+    console.log("asdf ", this.displayedMessages);
+  },
+  data: function() {
+    const old = new Date();
+    old.setDate(old.getDate() - 5);
+    return {
+      history: [
+        {
+          name: "userName1",
+          text: "asdf asdfa asdf asdf asdfa asdf daf",
+          sendDate: old
+        },
+        {
+          name: "userName2",
+          text: "dfd asdf adf fdfd asd as",
+          sendDate: new Date()
+        }
+      ]
+    };
+  }
+});
+</script>

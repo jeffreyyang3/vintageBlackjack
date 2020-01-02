@@ -27,7 +27,8 @@ export default Vue.extend({
   },
   props: {
     msg: String
-  }
+  },
+  mounted() {}
 });
 </script>
 
@@ -50,6 +51,8 @@ $windowGeneralGrey: #c0c0c0;
   border: 1px solid black;
   user-select: none;
   resize: vertical;
+  font-size: 115%;
+  font-family: "Times New Roman", Times, serif;
 }
 .composeArea:focus {
   outline: none;
