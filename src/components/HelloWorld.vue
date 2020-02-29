@@ -9,9 +9,8 @@
       </div>
     </div>
     <div class="contentContainer">
-      <MessageHistory />
+      <BJScreen />
 
-      <MessageCompose />
       <!-- <input type="text" class="composeArea" /> -->
     </div>
   </div>
@@ -21,12 +20,14 @@
 import Vue from "vue";
 import MessageHistory from "@/components/MessageHistory.vue";
 import MessageCompose from "@/components/MessageCompose.vue";
+import BJScreen from "@/components/casino/BJScreen.vue";
 
 export default Vue.extend({
   name: "HelloWorld",
   components: {
     MessageHistory,
-    MessageCompose
+    MessageCompose,
+    BJScreen
   },
   props: {
     msg: String
