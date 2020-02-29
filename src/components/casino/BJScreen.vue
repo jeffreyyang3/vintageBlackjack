@@ -2,24 +2,20 @@
   <div class="BJScreenContainer">
     <div class="upperHalf">
       <div class="dealerCards">
-        <img
-          class="dealerCard face"
-          src="@/assets/cardImages/c01.png"
-          alt="failed"
-        />
+        <!-- <img class="dealerCard face" src="@/assets/cardImages/c01.png" alt="failed" /> -->
         <!-- <img
           class="dealerCard shift"
           src="@/assets/cardImages/s04.png"
           alt="failed"
-        /> -->
-        <img
-          class="dealerCard shift"
-          src="@/assets/cardImages/c12.png"
-          alt="failed"
-        />
+        />-->
+        <!-- <img class="dealerCard shift" src="@/assets/cardImages/c11.png" alt="failed" /> -->
+
+        <HandDisplay hand="exDealerHand" />
       </div>
     </div>
-    <div class="lowerHalf"></div>
+    <div class="lowerHalf">
+      <HandDisplay hand="exHand" />
+    </div>
   </div>
 </template>
 
@@ -64,10 +60,23 @@
 </style>
 
 <script lang="ts">
+import HandDisplay from "@/components/casino/HandDisplay.vue";
 export default {
   name: "BJScreen",
   data: function() {
-    return {};
+    return {
+      exHand: [
+        { suit: "Diamonds", num: 1 },
+        { suit: "Diamonds", num: 11 }
+      ],
+      exDealerHand: [
+        {
+          suit: "Clubs",
+          num: 3
+        },
+        { suit: "Spades", num: 9, hidden: true }
+      ]
+    };
   }
 };
 </script>
