@@ -7,6 +7,25 @@
           src="@/assets/cardImages/c01.png"
           alt="failed"
         />
+        <img
+          class="dealerCard shift"
+          src="@/assets/cardImages/palm.png"
+          alt="failed"
+        />
+        <!-- <img
+          class="dealerCard shift"
+          src="@/assets/cardImages/c12.png"
+          alt="failed"
+        /> -->
+      </div>
+    </div>
+    <div class="lowerHalf">
+      <div class="myCards">
+        <img
+          class="dealerCard face"
+          src="@/assets/cardImages/c01.png"
+          alt="failed"
+        />
         <!-- <img
           class="dealerCard shift"
           src="@/assets/cardImages/s04.png"
@@ -19,7 +38,6 @@
         />
       </div>
     </div>
-    <div class="lowerHalf"></div>
   </div>
 </template>
 
@@ -31,28 +49,35 @@
   background-color: #418108;
 }
 
-.lowerHalf,
-.upperHalf {
-  width: 100%;
-  height: 40%;
+.lowerHalf {
+  height: 60%;
+  display: flex;
+  .dealerCards {
+    align-self: flex-end;
+    margin-bottom: 4%;
+  }
 }
 
 .upperHalf {
+  height: 40%;
+}
+.dealerCards,
+.myCards {
+  width: 32%;
+
+  // border: 1px solid black;
+  justify-content: center;
+  display: flex;
+  .shift {
+    margin-left: -28%;
+  }
+}
+.lowerHalf,
+.upperHalf {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .dealerCards {
-    width: 32%;
-    height: 90%;
-
-    // border: 1px solid black;
-    justify-content: center;
-    display: flex;
-    .shift {
-      margin-left: -28%;
-    }
-  }
 
   img {
     height: 96px;

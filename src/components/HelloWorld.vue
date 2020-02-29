@@ -1,7 +1,7 @@
 <template>
   <div class="windowContainer">
     <div class="windowTopBar">
-      <div class="windowTitle">Asdf</div>
+      <div class="windowTitle">Blacjack</div>
       <div class="sqButtonContainer">
         <div class="sqButton minus"></div>
         <div class="sqButton wind"></div>
@@ -59,11 +59,13 @@ $windowGeneralGrey: #c0c0c0;
   font-family: helvetica;
 }
 .windowContainer {
+  // resize: both;
+  // overflow: auto;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  height: 400px;
-  width: 500px;
+  height: 500px;
+  width: 600px;
   background-color: $windowGeneralGrey;
   padding: 3px;
   box-shadow: 1px 1px 0 0 #424242;
