@@ -1,6 +1,13 @@
 <template>
   <div class="handDisplayContainer">
-    <div class="cards"></div>
+    <div class="cards">
+      <img
+        v-for="(card, idx) in deck"
+        :src="getImgUrl(card)"
+        :key="card.num + card.suit"
+        :class="{shift : idx !== 0}"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,12 +43,26 @@ export default {
     return {};
   },
   methods: {
-    getImgUrl: function(card) {
-      return require("@/assets/cardImages/palm.png");
+    getImgUrl(card) {
+      const mapping = {
+        Clubs: "c",
+        Spades: "s",
+        Diamonds: "d",
+        Hearts: "h"
+      };
+
+      let fileNum = String(card.num);
+      if (card.num < 10) fileNum = `0${card.num}`;
+      console.log("card is", card);
+
+      return require(`@/assets/cardImages/${mapping[card.suit]}${fileNum}.png`);
     }
   },
   props: {
     deck: Array
+  },
+  mounted() {
+    console.log(this.deck);
   }
 };
 </script>

@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="lowerHalf">
-      <HandDisplay hand="exHand" />
+      <HandDisplay :deck="exHand" />
     </div>
   </div>
 </template>
@@ -64,7 +64,7 @@ import HandDisplay from "@/components/casino/HandDisplay.vue";
 export default {
   name: "BJScreen",
   components: {
-      HandDisplay
+    HandDisplay
   },
   data: function() {
     return {
