@@ -1,5 +1,5 @@
-import {Card, Deck, Hand} from "@/components/casino/Cards";
-import {Player} from "@/components/casino/Player";
+import {Card, Deck, Hand} from "./Cards"
+import {Player} from "./Player"
 
 export class Game {
     money: number;
@@ -12,11 +12,13 @@ export class Game {
         this.deck = new Deck();
     }
 
+
     startGameLoop(rounds : number) {
-        while(rounds > 0){
-            console.log("new round");
-            const dealerHand = new Hand();
+
+        for(let rounds = 0; rounds <= 10; rounds++){
+
         }
+        
     }
 
 
