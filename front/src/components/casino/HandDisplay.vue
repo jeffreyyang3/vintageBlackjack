@@ -6,6 +6,7 @@
         :src="getImgUrl(card)"
         :key="card.num + card.suit"
         :class="{shift : idx !== 0}"
+        :style="{ zIndex: idx}"
       />
     </div>
   </div>
@@ -13,19 +14,19 @@
 
 <style scoped lang="scss">
 .handDisplayContainer {
-  width: 100%;
+  width: 300px;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cards {
-  width: 32%;
-  height: 90%;
-
   // border: 1px solid black;
   justify-content: center;
   display: flex;
   .shift {
-    margin-left: -28%;
+    margin-left: -50px;
   }
   img {
     height: 96px;
@@ -44,6 +45,7 @@ export default {
   },
   methods: {
     getImgUrl(card) {
+      if (card.hidden) return require(`@/assets/cardImages/palm.png`);
       const mapping = {
         Clubs: "c",
         Spades: "s",

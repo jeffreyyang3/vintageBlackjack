@@ -10,11 +10,14 @@
         />-->
         <!-- <img class="dealerCard shift" src="@/assets/cardImages/c11.png" alt="failed" /> -->
 
-        <HandDisplay hand="exDealerHand" />
+        <HandDisplay :deck="currentState.dealer.hand" />
       </div>
     </div>
     <div class="lowerHalf">
+      <HandDisplay v-for="player in currentState.players" :key="player.name" :deck="player.hand" />
+      <!-- <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />
+      <HandDisplay :deck="exHand" />-->
     </div>
   </div>
 </template>
@@ -27,35 +30,22 @@
   background-color: #418108;
 }
 
+.lowerHalf {
+  display: flex;
+  justify-content: space-evenly;
+  height: 65%;
+}
+
 .lowerHalf,
 .upperHalf {
   width: 100%;
-  height: 40%;
 }
 
 .upperHalf {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .dealerCards {
-    width: 32%;
-    height: 90%;
-
-    // border: 1px solid black;
-    justify-content: center;
-    display: flex;
-    .shift {
-      margin-left: -28%;
-    }
-  }
-
-  img {
-    height: 96px;
-    width: 71px;
-    background-color: white;
-    border-radius: 2px;
-  }
+  height: 35%;
 }
 </style>
 
@@ -68,17 +58,39 @@ export default {
   },
   data: function() {
     return {
-      exHand: [
-        { suit: "Diamonds", num: 1 },
-        { suit: "Diamonds", num: 11 }
-      ],
-      exDealerHand: [
-        {
-          suit: "Clubs",
-          num: 3
-        },
-        { suit: "Spades", num: 9, hidden: true }
-      ]
+      currentState: {
+        players: [
+          {
+            name: "lyanna",
+            hand: [
+              { suit: "Diamonds", num: 1 },
+              { suit: "Diamonds", num: 11 },
+
+              { suit: "Diamonds", num: 11 }
+            ]
+          },
+          {
+            name: "steven",
+            hand: [
+              { suit: "Diamonds", num: 1 },
+              { suit: "Diamonds", num: 11 }
+            ]
+          },
+          {
+            name: "jeffrey",
+            hand: [
+              { suit: "Diamonds", num: 1 },
+              { suit: "Diamonds", num: 11 }
+            ]
+          }
+        ],
+        dealer: {
+          hand: [
+            { suit: "Diamonds", num: 2 },
+            { suit: "Clubs", num: 4, hidden: true }
+          ]
+        }
+      }
     };
   }
 };
