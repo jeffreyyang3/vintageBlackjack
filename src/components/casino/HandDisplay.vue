@@ -29,11 +29,16 @@
 }
 </style>
 
-<script lang="ts">
+<script>
 export default {
   name: "HandDisplay",
   data: function() {
     return {};
+  },
+  methods: {
+    getImgUrl: function(card) {
+      return require("@/assets/cardImages/palm.png");
+    }
   },
   props: {
     deck: Array

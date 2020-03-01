@@ -29,10 +29,12 @@ export default Vue.extend({
     MessageCompose,
     BJScreen
   },
+
   props: {
     msg: String
   },
-  mounted() {}
+  mounted() {
+  }
 });
 </script>
 

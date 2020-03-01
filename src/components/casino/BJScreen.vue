@@ -63,6 +63,9 @@
 import HandDisplay from "@/components/casino/HandDisplay.vue";
 export default {
   name: "BJScreen",
+  components: {
+      HandDisplay
+  },
   data: function() {
     return {
       exHand: [
