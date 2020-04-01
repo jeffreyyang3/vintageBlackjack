@@ -14,7 +14,9 @@
       </div>
     </div>
     <div class="lowerHalf">
-      <HandDisplay v-for="player in currentState.players" :key="player.name" :deck="player.hand" />
+      <div class="playerContainer" v-for="player in currentState.players" :key="player.name">
+        <HandDisplay :deck="player.hand" />
+      </div>
       <!-- <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />-->
@@ -28,6 +30,10 @@
   width: 100%;
   height: 100%;
   background-color: #418108;
+}
+
+.playerContainer {
+  width: 33%;
 }
 
 .lowerHalf {
@@ -64,8 +70,6 @@ export default {
             name: "lyanna",
             hand: [
               { suit: "Diamonds", num: 1 },
-              { suit: "Diamonds", num: 11 },
-
               { suit: "Diamonds", num: 11 }
             ]
           },

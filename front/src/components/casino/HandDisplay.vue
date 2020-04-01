@@ -14,7 +14,6 @@
 
 <style scoped lang="scss">
 .handDisplayContainer {
-  width: 300px;
   height: 100%;
   display: flex;
   align-items: center;
