@@ -44,7 +44,8 @@ export default {
   },
   methods: {
     getImgUrl(card) {
-      if (card.hidden) return require(`@/assets/cardImages/palm.png`);
+      if (card.suit === "hidden")
+        return require(`@/assets/cardImages/palm.png`);
       const mapping = {
         Clubs: "c",
         Spades: "s",
@@ -54,7 +55,6 @@ export default {
 
       let fileNum = String(card.num);
       if (card.num < 10) fileNum = `0${card.num}`;
-      console.log("card is", card);
 
       return require(`@/assets/cardImages/${mapping[card.suit]}${fileNum}.png`);
     }
@@ -63,6 +63,7 @@ export default {
     deck: Array
   },
   mounted() {
+    console.log("hand display given");
     console.log(this.deck);
   }
 };

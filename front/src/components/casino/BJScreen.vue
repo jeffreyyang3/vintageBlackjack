@@ -10,13 +10,19 @@
         />-->
         <!-- <img class="dealerCard shift" src="@/assets/cardImages/c11.png" alt="failed" /> -->
 
-        <HandDisplay :deck="currentState.dealer.hand" />
+        <HandDisplay :deck="gameState.dealerHand.cards" />
       </div>
     </div>
     <div class="lowerHalf">
-      <div class="playerContainer" v-for="player in currentState.players" :key="player.name">
-        <HandDisplay :deck="player.hand" />
+      <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
+        <HandDisplay :deck="player.hand.cards" />
       </div>
+      <div class="actions">
+        <button @click="sendHit">hit</button>
+        <button>stand</button>
+        <button>double</button>
+      </div>
+
       <!-- <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />-->
@@ -25,6 +31,11 @@
 </template>
 
 <style scoped lang="scss">
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .BJScreenContainer {
   border: 1px solid black;
   width: 100%;
@@ -38,6 +49,8 @@
 
 .lowerHalf {
   display: flex;
+  flex-flow: wrap;
+  align-items: flex-end;
   justify-content: space-evenly;
   height: 65%;
 }
@@ -55,46 +68,33 @@
 }
 </style>
 
-<script lang="ts">
+<script>
 import HandDisplay from "@/components/casino/HandDisplay.vue";
+const axios = require("axios");
 export default {
   name: "BJScreen",
   components: {
     HandDisplay
   },
+  mounted() {
+    this.socket = new WebSocket("ws://localhost:6999");
+    this.socket.onopen = _ => {
+      this.socket.onmessage = event => {
+        console.log(JSON.parse(event.data));
+        this.gameState = JSON.parse(event.data);
+      };
+    };
+  },
+  methods: {
+    sendHit() {
+      console.log(" hit");
+    }
+  },
   data: function() {
     return {
-      currentState: {
-        players: [
-          {
-            name: "lyanna",
-            hand: [
-              { suit: "Diamonds", num: 1 },
-              { suit: "Diamonds", num: 11 }
-            ]
-          },
-          {
-            name: "steven",
-            hand: [
-              { suit: "Diamonds", num: 1 },
-              { suit: "Diamonds", num: 11 }
-            ]
-          },
-          {
-            name: "jeffrey",
-            hand: [
-              { suit: "Diamonds", num: 1 },
-              { suit: "Diamonds", num: 11 }
-            ]
-          }
-        ],
-        dealer: {
-          hand: [
-            { suit: "Diamonds", num: 2 },
-            { suit: "Clubs", num: 4, hidden: true }
-          ]
-        }
-      }
+      socket: null,
+      socketOpen: false,
+      gameState: { players: [], dealerHand: { cards: [] } }
     };
   }
 };

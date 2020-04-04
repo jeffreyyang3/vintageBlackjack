@@ -1,4 +1,3 @@
-
 class Card {
   constructor(suit, num) {
     this.num = num;
@@ -10,7 +9,7 @@ class Card {
       Clubs: "c",
       Spades: "s",
       Diamonds: "d",
-      Hearts: "h"
+      Hearts: "h",
     };
 
     let fileNum = this.num;
@@ -24,18 +23,17 @@ class Card {
       1: "Ace",
       11: "Jack",
       12: "Queen",
-      13: "King"
+      13: "King",
     };
 
     return `${mapping[this.num] ? mapping[this.num] : this.num}`;
   }
 }
 class Deck {
-  constructor(deckStr) {
+  constructor(deckJSON) {
     const suits = ["Clubs", "Spades", "Diamonds", "Hearts"];
-    if(deckStr !== undefined){
-        this.cards = JSON.parse(deckStr);
-
+    if (deckJSON !== undefined) {
+      this.cards = JSON.parse(deckStr);
     } else {
       const nums = [...new Array(13)].map((_, idx) => {
         return idx + 1;
@@ -43,25 +41,21 @@ class Deck {
 
       this.cards = [];
 
-      suits.forEach(suit => {
-        nums.forEach(num => {
+      suits.forEach((suit) => {
+        nums.forEach((num) => {
           this.cards.push(new Card(suit, num));
         });
       });
-
+      this.shuffle();
     }
-
-
   }
 
-  deal(num){
-
+  deal(num) {
     const out = [];
-    for(let i = 0; i < num; i++){
+    for (let i = 0; i < num; i++) {
       out.push(this.cards.pop());
     }
     return out;
-
   }
 
   recycle(card) {
@@ -82,11 +76,10 @@ class Hand {
   }
 
   dealCards(cardList) {
-    cardList.forEach(card => {
+    cardList.forEach((card) => {
       this.cards.push(card);
     });
   }
-
 
   exportHand() {
     return JSON.stringify(this.cards);
@@ -96,7 +89,7 @@ class Hand {
 
   printHand() {
     let displayStr = "";
-    this.cards.forEach(card => {
+    this.cards.forEach((card) => {
       displayStr += card.getDisplayName(); // o(1)
     });
     console.log(displayStr);
@@ -106,7 +99,7 @@ class Hand {
     let aceUsed = false;
     let total = 0;
 
-    hand.forEach(card => {
+    hand.forEach((card) => {
       if (card.num === 1 && !aceUsed) {
         total += 11;
         aceUsed = true;
@@ -123,9 +116,8 @@ class Hand {
   }
 }
 
-
 module.exports = {
   Card,
   Deck,
-  Hand
+  Hand,
 };

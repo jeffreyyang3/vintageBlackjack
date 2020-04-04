@@ -2,39 +2,42 @@ const { Card, Deck, Hand } = require("./Cards");
 const { Player } = require("./Player");
 
 class Game {
-  constructor({gameJSON, playersData}) {
-    if(gameJSON){
+  constructor({ gameJSON, playersData }) {
+    if (gameJSON) {
       console.log("tripped");
       return;
     }
     this.deck = new Deck();
+
     this.numPlayers = playersData.length;
     this.dealerHand = new Hand();
-    this.dealerRevealed = false;
+    this.revealing = false;
     this.dealerHand.dealCards(this.deck.deal(2));
 
-    this.players = playersData.map(player => {
+    this.players = playersData.map((player) => {
       return new Player(player.name, player.money);
     });
 
-
-    this.players.forEach(player => {
+    this.players.forEach((player) => {
       player.hand.dealCards(this.deck.deal(2));
     });
   }
 
-  exportGame(){
+  exportGame() {
     return JSON.stringify(this);
   }
 
-  exportPlayerCopy(){
-    return JSON.stringify({
-      dealerHand: [this.dealerHand.cards[0]],
-      players: this.players
+  obscuredDealerHand() {
+    if (this.dealerHand.cards.length > 2 || this.revealing) {
+      return this.dealerHand.cards;
+    }
+    return this.dealerHand.cards.map((card, idx) => {
+      if (idx) return new Card("hidden", 420);
+      else return card;
     });
   }
 }
 
 module.exports = {
-  Game
+  Game,
 };

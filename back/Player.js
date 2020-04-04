@@ -5,6 +5,8 @@ class Player {
     this.hand = new Hand();
     this.money = money;
     this.name = name;
+    this.doubled = false;
+    this.split = false;
   }
 
 }
