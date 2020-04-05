@@ -10,8 +10,7 @@ function findPlayer(game, name) {
 }
 
 function hitHandler(game, name) {
-  console.log("in hithandler");
-  console.log(game)
+  console.log("in hit handler");
   const player = findPlayer(game, name);
   player.hand.dealCards(game.deck.deal(1));
   if(player.hand.sumHand() >= 21) player.canAct = false;

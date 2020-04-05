@@ -17,7 +17,7 @@
       <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
         <HandDisplay :deck="player.hand.cards" />
       </div>
-      <div class="actions">
+      <div class="actions" v-show="socketOpen">
         <button @click="sendHit">hit</button>
         <button>stand</button>
         <button>double</button>
@@ -79,6 +79,7 @@ export default {
   mounted() {
     this.socket = new WebSocket("ws://localhost:6999");
     this.socket.onopen = _ => {
+      this.socketOpen = true;
       this.socket.onmessage = event => {
         console.log(JSON.parse(event.data));
         this.gameState = JSON.parse(event.data);
@@ -87,7 +88,9 @@ export default {
   },
   methods: {
     sendHit() {
-      console.log(" hit");
+      this.socket.send(
+        JSON.stringify({ type: "move", data: { user: "steven", type: "hit" } })
+      );
     }
   },
   data: function() {
