@@ -17,10 +17,15 @@
       <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
         <HandDisplay :deck="player.hand.cards" />
       </div>
-      <div class="actions" v-show="socketOpen">
+      <div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
         <button @click="sendHit">hit</button>
         <button>stand</button>
         <button>double</button>
+      </div>
+      <div class="actions" v-else>
+        <button disabled>hit</button>
+        <button disabled>stand</button>
+        <button disabled>double</button>
       </div>
 
       <!-- <HandDisplay :deck="exHand" />
@@ -69,12 +74,21 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 import HandDisplay from "@/components/casino/HandDisplay.vue";
 const axios = require("axios");
 export default {
   name: "BJScreen",
   components: {
     HandDisplay
+  },
+  computed: {
+    currentPlayer: function() {
+      return this.gameState.players.filter(
+        player => player.name === this.currentUsername
+      )[0];
+    },
+    ...mapState(["currentUsername"])
   },
   mounted() {
     this.socket = new WebSocket("ws://localhost:6999");
@@ -85,13 +99,14 @@ export default {
         this.gameState = JSON.parse(event.data);
       };
     };
+    console.log(`current username is ${this.currentUsername}`);
   },
   methods: {
     sendHit() {
       this.socket.send(
         JSON.stringify({
           type: "move",
-          data: { user: this.accountName, type: "hit" }
+          data: { user: this.currentUsername, type: "hit" }
         })
       );
     }
@@ -100,8 +115,7 @@ export default {
     return {
       socket: null,
       socketOpen: false,
-      gameState: { players: [], dealerHand: { cards: [] } },
-      accountName: "steven"
+      gameState: { players: [], dealerHand: { cards: [] } }
     };
   }
 };

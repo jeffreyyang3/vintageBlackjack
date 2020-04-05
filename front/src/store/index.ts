@@ -11,7 +11,7 @@ const state: {
   currentUsername: string;
 } = {
   displayedMessages: [],
-  currentUsername: "userName1"
+  currentUsername: "steven"
 };
 
 export default new Vuex.Store({

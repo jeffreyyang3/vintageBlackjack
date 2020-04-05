@@ -41,7 +41,7 @@ wss.on("connection", socket => {
       copyEx = handleMove(copyEx.exportGame(), action.data);
       const playerJSON = copyEx.exportToPlayer();
       wss.clients.forEach(client => {
-        if(client !== socket || client.readyState === WebSocket.OPEN)
+        if(client.readyState === WebSocket.OPEN)
           client.send(playerJSON);
 
       });

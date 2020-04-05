@@ -17,11 +17,22 @@ function hitHandler(game, name) {
   return game.exportGame();
 }
 
+function standHandler(game, name){
+  console.log("in stand handler");
+  const player = findPlayer(game, name);
+  game.waitingFor = game.waitingFor.filter(name => name !== player.name);
+  player.canAct = false;
+  return game.exportGame()
+
+}
 
 
 function handleMove(gameJSON, move) {
   const game = new Game({ gameJSON });
   if (move.type === "hit") hitHandler(game, move.user);
+  else if(move.type === "stand") standHandler(game, move.user);
+
+
 
   return game;
 }
