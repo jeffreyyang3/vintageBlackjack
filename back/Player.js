@@ -7,6 +7,7 @@ class Player {
     this.name = name;
     this.doubled = false;
     this.split = false;
+    this.canAct = true;
   }
 
 }

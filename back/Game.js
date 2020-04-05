@@ -4,9 +4,10 @@ const { Player } = require("./Player");
 class Game {
   constructor({ gameJSON, playersData }) {
     if (gameJSON) {
-      console.log("tripped");
+      this.fromJSON(gameJSON);
       return;
     }
+
     this.deck = new Deck();
 
     this.numPlayers = playersData.length;
@@ -18,13 +19,43 @@ class Game {
       return new Player(player.name, player.money);
     });
 
+    this.waitingFor = this.players.map((player) => player.name);
+
     this.players.forEach((player) => {
       player.hand.dealCards(this.deck.deal(2));
     });
   }
 
+  fromJSON(gameJSON) {
+    const { numPlayers, revealing, waitingFor, deck, dealerHand, players } = JSON.parse(
+      gameJSON
+    );
+
+
+    this.numPlayers = numPlayers;
+    this.revealing = revealing;
+    this.waitingFor = waitingFor;
+    this.deck = new Deck(deck.cards);
+    this.dealerHand = new Hand(dealerHand.cards);
+    this.players = players.map(player => {
+      const playerObj = new Player(player.name, player.money);
+      playerObj.hand = new Hand(player.hand.cards);
+
+      return playerObj;
+
+
+    });
+  }
+
   exportGame() {
     return JSON.stringify(this);
+  }
+
+  exportToPlayer() {
+    const filtered = { ...this };
+    filtered.dealerHand.cards = this.obscuredDealerHand();
+    delete filtered.deck;
+    return JSON.stringify(filtered);
   }
 
   obscuredDealerHand() {

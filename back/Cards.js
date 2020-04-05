@@ -30,10 +30,10 @@ class Card {
   }
 }
 class Deck {
-  constructor(deckJSON) {
+  constructor(deckLst) {
     const suits = ["Clubs", "Spades", "Diamonds", "Hearts"];
-    if (deckJSON !== undefined) {
-      this.cards = JSON.parse(deckStr);
+    if (deckLst !== undefined) {
+      this.cards = deckLst;
     } else {
       const nums = [...new Array(13)].map((_, idx) => {
         return idx + 1;
@@ -71,8 +71,8 @@ class Deck {
 }
 
 class Hand {
-  constructor() {
-    this.cards = [];
+  constructor(cardList) {
+    this.cards = cardList ? cardList : [];
   }
 
   dealCards(cardList) {
@@ -95,11 +95,11 @@ class Hand {
     console.log(displayStr);
     console.log(`total is ${this.sumHand(this.cards)}`);
   }
-  sumHand(hand) {
+  sumHand() {
     let aceUsed = false;
     let total = 0;
 
-    hand.forEach((card) => {
+    this.cards.forEach((card) => {
       if (card.num === 1 && !aceUsed) {
         total += 11;
         aceUsed = true;
@@ -108,8 +108,8 @@ class Hand {
       }
     });
 
-    if (total > 21) {
-      if (aceUsed) total -= 10;
+    if (total > 21 && aceUsed) {
+      total -= 10;
     }
 
     return total;
