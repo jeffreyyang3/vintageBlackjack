@@ -8,6 +8,7 @@ class Player {
     this.doubled = false;
     this.split = false;
     this.canAct = true;
+    this.result = "none" // win lose push
   }
 
 }

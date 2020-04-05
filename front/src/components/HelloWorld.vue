@@ -10,7 +10,6 @@
     </div>
     <div class="contentContainer">
       <BJScreen />
-
       <!-- <input type="text" class="composeArea" /> -->
     </div>
   </div>
@@ -27,13 +26,13 @@ export default Vue.extend({
   components: {
     MessageHistory,
     MessageCompose,
-    BJScreen
+    BJScreen,
   },
 
   props: {
-    msg: String
+    msg: String,
   },
-  mounted() {}
+  mounted() {},
 });
 </script>
 
@@ -63,8 +62,8 @@ $windowGeneralGrey: #c0c0c0;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  height: 400px;
-  width: 500px;
+  // height: 600px;
+  // width: 700px;
   background-color: $windowGeneralGrey;
   padding: 3px;
   box-shadow: 1px 1px 0 0 #424242;

@@ -18,7 +18,7 @@ const hand = new Hand();
 const exampleGame = new Game({
   gameJSON: false,
   gameID: "asdf",
-  playersData: ["lyanna", "steven", "jeff"].map((name) => {
+  playersData: ["jef", "josh", "steven"].map((name) => {
     return {
       name,
       money: 100,
