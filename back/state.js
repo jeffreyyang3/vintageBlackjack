@@ -22,6 +22,7 @@ const exampleGame = new Game({
     return {
       name,
       money: 100,
+      wager: 5
     };
   }),
 });

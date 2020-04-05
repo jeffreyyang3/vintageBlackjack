@@ -10,6 +10,11 @@
         />-->
         <!-- <img class="dealerCard shift" src="@/assets/cardImages/c11.png" alt="failed" /> -->
 
+
+
+
+
+
         <HandDisplay :deck="gameState.dealerHand.cards" />
       </div>
     </div>
