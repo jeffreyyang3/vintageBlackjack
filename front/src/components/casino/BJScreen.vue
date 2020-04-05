@@ -89,7 +89,10 @@ export default {
   methods: {
     sendHit() {
       this.socket.send(
-        JSON.stringify({ type: "move", data: { user: "steven", type: "hit" } })
+        JSON.stringify({
+          type: "move",
+          data: { user: this.accountName, type: "hit" }
+        })
       );
     }
   },
@@ -97,7 +100,8 @@ export default {
     return {
       socket: null,
       socketOpen: false,
-      gameState: { players: [], dealerHand: { cards: [] } }
+      gameState: { players: [], dealerHand: { cards: [] } },
+      accountName: "steven"
     };
   }
 };

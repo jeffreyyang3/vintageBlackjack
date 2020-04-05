@@ -28,26 +28,24 @@ const exampleGame = new Game({
 let copyEx = new Game({ gameJSON: exampleGame.exportGame() });
 
 
-wss.on("connection", (socket) => {
+wss.on("connection", socket => {
   socket.on("message", message => {
     const action = JSON.parse(message);
-    /*
-    {
-      type: "move",
-      data: {
-        user: "username",
-        type: "hit|stand|double"
-      }
-    }
+    console.log("message received")
 
-     */
 
     if(action.type === "move"){
 
       //copyEx = handleMove(copyEx.exportGame(), {user: "steven", type: "hit"});
 
       copyEx = handleMove(copyEx.exportGame(), action.data);
-      socket.send(copyEx.exportToPlayer());
+      const playerJSON = copyEx.exportToPlayer();
+      wss.clients.forEach(client => {
+        if(client !== socket || client.readyState === WebSocket.OPEN)
+          client.send(playerJSON);
+
+      });
+      // socket.send(copyEx.exportToPlayer());
 
     }
 
