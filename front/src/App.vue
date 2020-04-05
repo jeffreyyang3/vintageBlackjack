@@ -1,12 +1,24 @@
 <template>
   <div id="app">
+    <h1>
+      hi my name is
+      <input type="text" v-model="$store.state.currentUsername" />
+    </h1>
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div> -->
+    </div>-->
     <router-view />
   </div>
 </template>
+<script>
+import { mapState } from "vuex";
+export default {
+  // computed: {
+  //   ...mapState(["currentUsername"])
+  // }
+};
+</script>
 
 <style lang="scss">
 body {

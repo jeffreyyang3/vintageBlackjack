@@ -33,8 +33,7 @@ export default Vue.extend({
   props: {
     msg: String
   },
-  mounted() {
-  }
+  mounted() {}
 });
 </script>
 
