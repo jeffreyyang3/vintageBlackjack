@@ -15,13 +15,13 @@ class Game {
     this.revealing = false;
     this.dealerHand.dealCards(this.deck.deal(2));
 
-    this.players = playersData.map((player) => {
+    this.players = playersData.map(player => {
       return new Player(player.name, player.money);
     });
 
-    this.waitingFor = this.players.map((player) => player.name);
+    this.waitingFor = this.players.map(player => player.name);
 
-    this.players.forEach((player) => {
+    this.players.forEach(player => {
       player.hand.dealCards(this.deck.deal(2));
     });
   }
@@ -38,12 +38,8 @@ class Game {
     this.deck = new Deck(deck.cards);
     this.dealerHand = new Hand(dealerHand.cards);
     this.players = players.map(player => {
-      const playerObj = new Player(player.name, player.money);
-      playerObj.hand = new Hand(player.hand.cards);
-
-      return playerObj;
-
-
+      player.hand = new Hand(player.hand.cards);
+      return player;
     });
   }
 
@@ -52,14 +48,14 @@ class Game {
   }
 
   exportToPlayer() {
-    const filtered = { ...this };
+    const filtered = JSON.parse(JSON.stringify(this));
     filtered.dealerHand.cards = this.obscuredDealerHand();
     delete filtered.deck;
     return JSON.stringify(filtered);
   }
 
   obscuredDealerHand() {
-    if (this.dealerHand.cards.length > 2 || this.revealing) {
+    if (!this.waitingFor.length) {
       return this.dealerHand.cards;
     }
     return this.dealerHand.cards.map((card, idx) => {

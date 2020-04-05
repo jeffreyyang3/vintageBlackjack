@@ -18,7 +18,7 @@ const hand = new Hand();
 const exampleGame = new Game({
   gameJSON: false,
   gameID: "asdf",
-  playersData: ["jeff", "steven", "lyanna"].map((name) => {
+  playersData: ["lyanna", "steven", "jeff"].map((name) => {
     return {
       name,
       money: 100,
@@ -38,8 +38,9 @@ wss.on("connection", socket => {
     if(action.type === "move"){
 
       //copyEx = handleMove(copyEx.exportGame(), {user: "steven", type: "hit"});
+      console.log(copyEx.dealerHand)
 
-      copyEx = handleMove(copyEx.exportGame(), action.data);
+      handleMove(copyEx, action.data);
       const playerJSON = copyEx.exportToPlayer();
       wss.clients.forEach(client => {
         if(client.readyState === WebSocket.OPEN)

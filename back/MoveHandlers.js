@@ -2,9 +2,9 @@ const { Game } = require("./Game");
 
 
 
-function handleMove(gameJSON, move) {
+function handleMove(game , move) {
 
-  const game = new Game({ gameJSON });
+  // const game = new Game({ gameJSON });
   const player = findPlayer(game, move.user);
 
   function doubleHandler() {
@@ -30,6 +30,11 @@ function handleMove(gameJSON, move) {
   if (move.type === "hit") hitHandler(game, move.user);
   else if (move.type === "stand") standHandler(game, move.user);
   else doubleHandler(game, move.user);
+
+  if(!game.waitingFor.length){
+    console.log("dealers turn")
+
+  }
 
   return game;
 }

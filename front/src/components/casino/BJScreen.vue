@@ -2,19 +2,7 @@
   <div class="BJScreenContainer">
     <div class="upperHalf">
       <div class="dealerCards">
-        <!-- <img class="dealerCard face" src="@/assets/cardImages/c01.png" alt="failed" /> -->
-        <!-- <img
-          class="dealerCard shift"
-          src="@/assets/cardImages/s04.png"
-          alt="failed"
-        />-->
-        <!-- <img class="dealerCard shift" src="@/assets/cardImages/c11.png" alt="failed" /> -->
-
-
-
-
-
-
+       
         <HandDisplay :deck="gameState.dealerHand.cards" />
       </div>
     </div>
@@ -23,9 +11,9 @@
         <HandDisplay :deck="player.hand.cards" />
       </div>
       <div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
-        <button @click="sendHit">hit</button>
-        <button>stand</button>
-        <button>double</button>
+        <button @click="sendAction('hit')">hit</button>
+        <button @click="sendAction('stand')">stand</button>
+        <button @click="sendAction('double')">double</button>
       </div>
       <div class="actions" v-else>
         <button disabled>hit</button>
@@ -107,11 +95,11 @@ export default {
     console.log(`current username is ${this.currentUsername}`);
   },
   methods: {
-    sendHit() {
+    sendAction(action) {
       this.socket.send(
         JSON.stringify({
           type: "move",
-          data: { user: this.currentUsername, type: "hit" }
+          data: { user: this.currentUsername, type: action }
         })
       );
     }
