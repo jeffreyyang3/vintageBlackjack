@@ -6,17 +6,10 @@
       </div>
     </div>
     <div class="lowerHalf">
-      <div
-        class="playerContainer"
-        v-for="player in gameState.players"
-        :key="player.name"
-      >
+      <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
         <HandDisplay :deck="player.hand.cards" :name="player.name" />
       </div>
-      <div
-        class="actions"
-        v-if="socketOpen && currentPlayer && currentPlayer.canAct"
-      >
+      <div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
         <button @click="sendAction('hit')">hit</button>
         <button @click="sendAction('stand')">stand</button>
         <button @click="sendAction('double')">double</button>
@@ -30,18 +23,29 @@
       <!-- <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />-->
+      <div class="bottomBar">
+        <div class="bottomBarItem" v-for="(item, idx) in userInfo" :key="idx">{{ item }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.bottomBarItem {
+  margin-right: 10px;
+}
+.bottomBar {
+  width: 100%;
+  height: 13px;
+  background-color: #c0c0c0;
+  display: flex;
+}
 .break {
   flex-basis: 100%;
   height: 0;
 }
 
 .BJScreenContainer {
-  border: 1px solid black;
   width: 100%;
   height: 100%;
   background-color: #418108;
@@ -79,21 +83,26 @@ const axios = require("axios");
 export default {
   name: "BJScreen",
   components: {
-    HandDisplay,
+    HandDisplay
   },
   computed: {
-    currentPlayer: function () {
+    currentPlayer: function() {
       return this.gameState.players.filter(
-        (player) => player.name === this.currentUsername
+        player => player.name === this.currentUsername
       )[0];
     },
-    ...mapState(["currentUsername"]),
+    userInfo: function() {
+      const out = [`User: ${this.currentUsername}`];
+      if (this.currentPlayer) out.push(`Money: ${this.currentPlayer.money}`);
+      return out;
+    },
+    ...mapState(["currentUsername"])
   },
   mounted() {
     this.socket = new WebSocket("ws://localhost:6999");
-    this.socket.onopen = (_) => {
+    this.socket.onopen = _ => {
       this.socketOpen = true;
-      this.socket.onmessage = (event) => {
+      this.socket.onmessage = event => {
         console.log(JSON.parse(event.data));
         this.gameState = JSON.parse(event.data);
       };
@@ -105,17 +114,17 @@ export default {
       this.socket.send(
         JSON.stringify({
           type: "move",
-          data: { user: this.currentUsername, type: action },
+          data: { user: this.currentUsername, type: action }
         })
       );
-    },
+    }
   },
-  data: function () {
+  data: function() {
     return {
       socket: null,
       socketOpen: false,
-      gameState: { players: [], dealerHand: { cards: [] } },
+      gameState: { players: [], dealerHand: { cards: [] } }
     };
-  },
+  }
 };
 </script>

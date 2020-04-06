@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from "vue";
 import MessageHistory from "@/components/MessageHistory.vue";
 import MessageCompose from "@/components/MessageCompose.vue";
@@ -26,13 +26,13 @@ export default Vue.extend({
   components: {
     MessageHistory,
     MessageCompose,
-    BJScreen,
+    BJScreen
   },
 
   props: {
-    msg: String,
+    msg: String
   },
-  mounted() {},
+  mounted() {}
 });
 </script>
 
@@ -42,7 +42,7 @@ $topRightButtonGrey: #d6d6ce;
 $windowGeneralGrey: #c0c0c0;
 
 .contentContainer {
-  width: 98%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -62,8 +62,8 @@ $windowGeneralGrey: #c0c0c0;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
-  // height: 600px;
-  // width: 700px;
+  height: 600px;
+  width: 700px;
   background-color: $windowGeneralGrey;
   padding: 3px;
   box-shadow: 1px 1px 0 0 #424242;
