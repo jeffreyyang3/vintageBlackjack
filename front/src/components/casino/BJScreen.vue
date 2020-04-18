@@ -99,7 +99,7 @@ export default {
     ...mapState(["currentUsername"])
   },
   mounted() {
-    this.socket = new WebSocket("ws://localhost:6999");
+    this.socket = new WebSocket("ws://localhost:3050/ws");
     this.socket.onopen = _ => {
       this.socketOpen = true;
       this.socket.onmessage = event => {

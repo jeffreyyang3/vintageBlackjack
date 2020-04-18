@@ -1,14 +1,22 @@
 version: '3'
 services:
+  front:
+    build: 
+      context: ./front
+
+    volumes:
+      - /app/node_modules
+      - ./front:/app
+    
   nginx:
     restart: always
     build:
       dockerfile: Dockerfile
       context: ./nginx
-    ports:
-      - '3050:80'
     logging:
       driver: none
+    ports:
+      - '3050:80'
 
   api:
     build:
