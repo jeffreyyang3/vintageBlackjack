@@ -23,10 +23,13 @@ app.listen(6998, () => {
 
 const deck = new Deck();
 const hand = new Hand();
+let gameCounter = 0;
+
+
 
 const exampleGame = new Game({
   gameJSON: false,
-  gameID: "asdf",
+  gameID: 0,
   playersData: ["lyanna", "steve", "jef"].map(name => {
     return {
       name,
@@ -35,6 +38,8 @@ const exampleGame = new Game({
     };
   })
 });
+const games = {};
+
 let copyEx = new Game({ gameJSON: exampleGame.exportGame() });
 
 wss.on("connection", socket => {
@@ -42,18 +47,20 @@ wss.on("connection", socket => {
     const action = JSON.parse(message);
     console.log("message received");
 
+
     if (action.type === "move") {
       //copyEx = handleMove(copyEx.exportGame(), {user: "steven", type: "hit"});
       console.log(copyEx.dealerHand);
 
       handleMove(copyEx, action.data);
+      if(copyEx.done) console.log("round over!");
       const playerJSON = copyEx.exportToPlayer();
 
       wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
       });
-      // socket.send(copyEx.exportToPlayer());
-    }
+      socket.send(copyEx.exportToPlayer());
+    } 
   });
   console.log("client connected");
   socket.send(copyEx.exportToPlayer());

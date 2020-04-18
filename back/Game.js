@@ -7,6 +7,7 @@ class Game {
       this.fromJSON(gameJSON);
       return;
     }
+    this.done = false;
 
     this.deck = new Deck();
 
@@ -24,6 +25,18 @@ class Game {
     this.players.forEach(player => {
       player.hand.dealCards(this.deck.deal(2));
     });
+  }
+
+  nextRound() {
+    this.done = false;
+    this.deck = new Deck();
+    this.dealerHand = new Hand();
+    this.dealerHand.dealCards(this.deck.deal(2));
+    this.waitingFor = this.players.map(player => player.name);
+    this.players.forEach(player => {
+      player.hand.dealCards(this.deck.deal(2));
+    });
+
   }
 
   fromJSON(gameJSON) {

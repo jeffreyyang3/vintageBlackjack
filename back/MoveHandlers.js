@@ -27,6 +27,7 @@ function handleMove(game, move) {
       game.dealerHand.dealCards(game.deck.deal(1));
       dealerScore = game.dealerHand.sumHand();
     }
+
     game.players.forEach((player) => {
       const score = player.hand.sumHand();
       if (score > 21) player.status = "lose";
@@ -34,9 +35,16 @@ function handleMove(game, move) {
         if (dealerScore > 21) player.status = "win";
         else player.status = dealerScore > score ? "lose" : "win";
       } else {
-        player.status = "push";
+       player.status = "push";
       }
+
+      if(player.status === "win") player.money += player.bet;
+
+      if(player.status === "lose") player.money -= player.bet;
+
     });
+    game.done = true;
+
   }
 
   if (move.type === "hit") hitHandler();

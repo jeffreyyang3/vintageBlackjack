@@ -107,8 +107,8 @@ export default {
         this.gameState = JSON.parse(event.data);
       };
     };
-    console.log(`current username is ${this.currentUsername}`);
   },
+
   methods: {
     sendAction(action) {
       this.socket.send(
@@ -119,6 +119,7 @@ export default {
       );
     }
   },
+
   data: function() {
     return {
       socket: null,

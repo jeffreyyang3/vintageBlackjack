@@ -52,7 +52,7 @@
 <script>
 export default {
   name: "HandDisplay",
-  data: function () {
+  data: function() {
     return {};
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
       let aceUsed = false;
       let total = 0;
 
-      this.deck.forEach((card) => {
+      this.deck.forEach(card => {
         if (card.suit === "hidden") return;
         if (card.num === 1 && !aceUsed) {
           total += 11;
@@ -70,12 +70,16 @@ export default {
         }
       });
 
-      if (total > 21 && aceUsed) {
-        total -= 10;
+      if (aceUsed) {
+        if (total > 21) {
+          total -= 10;
+        } else {
+          return `${total - 10}/${total}`;
+        }
       }
 
       return total;
-    },
+    }
   },
   methods: {
     getImgUrl(card) {
@@ -85,22 +89,22 @@ export default {
         Clubs: "c",
         Spades: "s",
         Diamonds: "d",
-        Hearts: "h",
+        Hearts: "h"
       };
 
       let fileNum = String(card.num);
       if (card.num < 10) fileNum = `0${card.num}`;
 
       return require(`@/assets/cardImages/${mapping[card.suit]}${fileNum}.png`);
-    },
+    }
   },
   props: {
     deck: Array,
-    name: String,
+    name: String
   },
   mounted() {
     console.log("hand display given");
     console.log(this.deck);
-  },
+  }
 };
 </script>
