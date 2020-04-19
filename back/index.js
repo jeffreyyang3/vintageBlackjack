@@ -59,7 +59,7 @@ wss.on("connection", socket => {
             if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
           });
           socket.send(copyEx.exportToPlayer());
-        }, 1000);
+        }, 5000);
       }
       const playerJSON = copyEx.exportToPlayer();
 
