@@ -25,12 +25,10 @@ const deck = new Deck();
 const hand = new Hand();
 let gameCounter = 0;
 
-
-
 const exampleGame = new Game({
   gameJSON: false,
   gameID: 0,
-  playersData: ["lyanna", "steve", "jef"].map(name => {
+  playersData: ["jon", "steve", "jef"].map(name => {
     return {
       name,
       money: 100,
@@ -47,20 +45,29 @@ wss.on("connection", socket => {
     const action = JSON.parse(message);
     console.log("message received");
 
-
     if (action.type === "move") {
       //copyEx = handleMove(copyEx.exportGame(), {user: "steven", type: "hit"});
       console.log(copyEx.dealerHand);
 
       handleMove(copyEx, action.data);
-      if(copyEx.done) console.log("round over!");
+      if (copyEx.done) {
+        setTimeout(() => {
+          copyEx.nextRound();
+          const playerJSON = copyEx.exportToPlayer();
+
+          wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
+          });
+          socket.send(copyEx.exportToPlayer());
+        }, 1000);
+      }
       const playerJSON = copyEx.exportToPlayer();
 
       wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
       });
       socket.send(copyEx.exportToPlayer());
-    } 
+    }
   });
   console.log("client connected");
   socket.send(copyEx.exportToPlayer());

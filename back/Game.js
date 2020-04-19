@@ -33,17 +33,23 @@ class Game {
     this.dealerHand = new Hand();
     this.dealerHand.dealCards(this.deck.deal(2));
     this.waitingFor = this.players.map(player => player.name);
-    this.players.forEach(player => {
-      player.hand.dealCards(this.deck.deal(2));
-    });
 
+    this.players.forEach(player => {
+      player.hand = new Hand();
+      player.hand.dealCards(this.deck.deal(2));
+      player.status = "none";
+    });
   }
 
   fromJSON(gameJSON) {
-    const { numPlayers, revealing, waitingFor, deck, dealerHand, players } = JSON.parse(
-      gameJSON
-    );
-
+    const {
+      numPlayers,
+      revealing,
+      waitingFor,
+      deck,
+      dealerHand,
+      players
+    } = JSON.parse(gameJSON);
 
     this.numPlayers = numPlayers;
     this.revealing = revealing;
@@ -79,5 +85,5 @@ class Game {
 }
 
 module.exports = {
-  Game,
+  Game
 };

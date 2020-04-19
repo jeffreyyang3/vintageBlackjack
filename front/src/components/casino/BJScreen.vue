@@ -93,7 +93,14 @@ export default {
     },
     userInfo: function() {
       const out = [`User: ${this.currentUsername}`];
-      if (this.currentPlayer) out.push(`Money: ${this.currentPlayer.money}`);
+      if (this.currentPlayer){
+        out.push(`Money: ${this.currentPlayer.money}`);
+        console.log(this.currentPlayer)
+        if (this.currentPlayer.status === "win") out.push("You won.");
+        if (this.currentPlayer.status === "lose") out.push("You lost.");
+        if (this.currentPlayer.status === "push") out.push("You pushed.")
+      } 
+      if(this.currentPlayer.status !== "none") out.push("Next round in 10s")
       return out;
     },
     ...mapState(["currentUsername"])
