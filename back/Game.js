@@ -38,6 +38,7 @@ class Game {
       player.hand = new Hand();
       player.hand.dealCards(this.deck.deal(2));
       player.status = "none";
+      player.canAct = true
     });
   }
 

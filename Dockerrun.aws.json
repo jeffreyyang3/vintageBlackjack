@@ -7,13 +7,15 @@
       "hostname": "client",
       "essential": true,
       "memory": 128
+
     },
     {
       "name": "front",
       "image": "jeffreyyang0/vintage_blackjack:front",
       "hostname": "front",
       "essential": true,
-      "memory": 128
+
+      "memory": 256
     },
     {
       "name": "nginx",
@@ -27,7 +29,7 @@
         }
       ],
       "links": ["front", "api"],
-      "memory": 128
+      "memory": 256
     }
   ]
 }

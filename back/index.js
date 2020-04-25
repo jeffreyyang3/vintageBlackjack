@@ -28,7 +28,7 @@ let gameCounter = 0;
 const exampleGame = new Game({
   gameJSON: false,
   gameID: 0,
-  playersData: ["jon", "steve", "jef"].map(name => {
+  playersData: ["lyanna", "steve", "jef"].map(name => {
     return {
       name,
       money: 100,
@@ -59,7 +59,7 @@ wss.on("connection", socket => {
             if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
           });
           socket.send(copyEx.exportToPlayer());
-        }, 1000);
+        }, 10000);
       }
       const playerJSON = copyEx.exportToPlayer();
 

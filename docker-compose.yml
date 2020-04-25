@@ -1,14 +1,6 @@
 version: '3'
 services:
-  front:
-    image: jeffreyyang0/vintage_blackjack:front
-    build: 
-      context: ./front
-
-    volumes:
-      - /app/node_modules
-      - ./front:/app
-    
+     
   nginx:
     restart: always
 
@@ -19,7 +11,7 @@ services:
     logging:
       driver: none
     ports:
-      - '3050:80'
+      - '80:80'
 
   api:
 
