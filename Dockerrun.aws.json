@@ -1,0 +1,33 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "jeffreyyang0/vintage_blackjack:api",
+      "hostname": "api",
+      "essential": true,
+      "memory": 256
+    },
+    {
+      "name": "front",
+      "image": "jeffreyyang0/vintage_blackjack:front",
+      "hostname": "front",
+      "essential": true,
+      "memory": 256
+    },
+    {
+      "name": "nginx",
+      "image": "jeffreyyang0/vintage_blackjack:nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["front", "api"],
+      "memory": 256
+    }
+  ]
+}
