@@ -8,13 +8,11 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./nginx
-    logging:
-      driver: none
     ports:
       - '80:80'
 
   api:
-
+    restart: always
     image: jeffreyyang0/vintage_blackjack:api
     build:
       dockerfile: Dockerfile
