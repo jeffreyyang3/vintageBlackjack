@@ -106,7 +106,7 @@ export default {
     ...mapState(["currentUsername"])
   },
   mounted() {
-    this.socket = new WebSocket("ws://localhost:3050/ws");
+    this.socket = new WebSocket(`ws://${window.location.hostname}/ws`);
     this.socket.onopen = _ => {
       this.socketOpen = true;
       this.socket.onmessage = event => {

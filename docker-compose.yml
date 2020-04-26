@@ -1,24 +1,21 @@
 version: '3'
 services:
-  front:
-    build: 
-      context: ./front
-
-    volumes:
-      - /app/node_modules
-      - ./front:/app
-    
+     
   nginx:
     restart: always
+
+    image: jeffreyyang0/vintage_blackjack:nginx
     build:
       dockerfile: Dockerfile
       context: ./nginx
     logging:
       driver: none
     ports:
-      - '3050:80'
+      - '80:80'
 
   api:
+
+    image: jeffreyyang0/vintage_blackjack:api
     build:
       dockerfile: Dockerfile
       context: ./back
