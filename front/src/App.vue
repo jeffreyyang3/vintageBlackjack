@@ -13,6 +13,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import css from "98.css";
 export default {
   // computed: {
   //   ...mapState(["currentUsername"])
@@ -20,7 +21,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 body {
   background-color: #3a8181;
 }

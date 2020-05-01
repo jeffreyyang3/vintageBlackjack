@@ -3,6 +3,7 @@ services:
   front:
     build: 
       context: ./front
+      dockerfile: Dockerfile
 
     volumes:
       - /app/node_modules

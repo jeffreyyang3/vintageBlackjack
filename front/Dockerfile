@@ -1,6 +1,6 @@
 from node:alpine
 workdir "/app"
 copy ./package.json ./
-run yarn
+run npm install
 copy . .
-cmd ["yarn", "serve"]
+cmd ["npm","run" , "serve"]
