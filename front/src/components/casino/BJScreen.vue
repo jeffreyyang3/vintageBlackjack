@@ -10,22 +10,20 @@
         <HandDisplay :deck="player.hand.cards" :name="player.name" />
       </div>
       <div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
-        <button @click="sendAction('hit')">hit</button>
-        <button @click="sendAction('stand')">stand</button>
-        <button @click="sendAction('double')">double</button>
+        <button @click="sendAction('hit')">Hit</button>
+        <button @click="sendAction('stand')">Stand</button>
+        <button @click="sendAction('double')">Double</button>
       </div>
       <div class="actions" v-else>
-        <button disabled>hit</button>
-        <button disabled>stand</button>
-        <button disabled>double</button>
+        <button disabled>Hit</button>
+        <button disabled>Stand</button>
+        <button disabled>Double</button>
       </div>
 
       <!-- <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />
       <HandDisplay :deck="exHand" />-->
-      <div class="bottomBar">
-        <div class="bottomBarItem" v-for="(item, idx) in userInfo" :key="idx">{{ item }}</div>
-      </div>
+      
     </div>
   </div>
 </template>
@@ -85,25 +83,33 @@ export default {
   components: {
     HandDisplay
   },
+  watch: {
+    userInfo(){
+      this.$store.state.userInfo = [...this.userInfo];
+    }
+
+  },
   computed: {
+
+    ...mapState(["currentUsername"]),
     currentPlayer: function() {
+      console.log(this.currentUsername)
       return this.gameState.players.filter(
         player => player.name === this.currentUsername
       )[0];
     },
     userInfo: function() {
-      const out = [`User: ${this.currentUsername}`];
+      const out = [this.currentUsername];
       if (this.currentPlayer){
-        out.push(`Money: ${this.currentPlayer.money}`);
+        out.push(`$${this.currentPlayer.money}`);
         console.log(this.currentPlayer)
-        if (this.currentPlayer.status === "win") out.push("You won.");
-        if (this.currentPlayer.status === "lose") out.push("You lost.");
-        if (this.currentPlayer.status === "push") out.push("You pushed.")
+        if (this.currentPlayer.status === "win") out.push("Won");
+        if (this.currentPlayer.status === "lose") out.push("Lost");
+        if (this.currentPlayer.status === "push") out.push("Pushed")
         if(this.currentPlayer.status !== "none") out.push("Next round in 10s")
       } 
       return out;
     },
-    ...mapState(["currentUsername"])
   },
   mounted() {
     this.socket = new WebSocket(`ws://${window.location.hostname}/ws`);

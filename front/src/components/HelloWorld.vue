@@ -1,7 +1,7 @@
 <template>
-  <div class="window">
+  <div class="window bjWindow">
     <div class="title-bar">
-      <div class="title-bar-text">A Complete Window</div>
+      <div class="title-bar-text">{{ barInfo }}</div>
       <div class="title-bar-controls">
         <button aria-label="Minimize"></button>
         <button aria-label="Maximize"></button>
@@ -19,13 +19,23 @@
   </div>
 </template>
 <style scoped lang="scss">
+.bjWindow {
+  width: 650px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+
+
+}
 .contentContainer {
   padding-left: 2px;
+  flex-grow: 1;
   padding-right: 2px;
+  margin-bottom: 4px;
 }
 
 .options {
-  padding: 4px 0px 4px 2px;
+  padding: 4px 0 4px 2px;
 }
 </style>
 
@@ -34,6 +44,7 @@ import Vue from "vue";
 import MessageHistory from "@/components/MessageHistory.vue";
 import MessageCompose from "@/components/MessageCompose.vue";
 import BJScreen from "@/components/casino/BJScreen.vue";
+import { mapState } from "vuex";
 
 export default Vue.extend({
   name: "HelloWorld",
@@ -45,6 +56,16 @@ export default Vue.extend({
 
   props: {
     msg: String
+  },
+  computed: {
+    ...mapState(["userInfo"]),
+    barInfo(){
+      return ["Blackjack", ...this.userInfo].join(" - ")
+
+    }
+
+
+
   },
   mounted() {}
 });

@@ -9,9 +9,12 @@ const state: {
     // sendDate: Date;
   }>;
   currentUsername: string;
+  userInfo: Array<string>;
 } = {
   displayedMessages: [],
-  currentUsername: "steve"
+  currentUsername: "jef",
+  userInfo: []
+
 };
 
 export default new Vuex.Store({

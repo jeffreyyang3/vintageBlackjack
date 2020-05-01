@@ -1,6 +1,6 @@
 <template>
   <div class="handDisplayContainer">
-    <div class="result">{{ name }}</div>
+    <div class="gameText">{{ name }}</div>
     <div class="cards">
       <img
         v-for="(card, idx) in deck"
@@ -10,19 +10,19 @@
         :style="{ zIndex: idx }"
       />
     </div>
-    <div class="result" :class="{ lose: deckSum > 21 }">{{ deckSum }}</div>
+    <div class="gameText" :class="{ lose: deckSum > 21 }">{{ deckSum }}</div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.result {
+.gameText {
   margin-top: 10px;
   font-size: 180%;
   color: black;
   font-family: "Times New Roman", Times, serif;
 }
 
-.result.lose {
+.gameText.lose {
   text-decoration: line-through;
 }
 .handDisplayContainer {
