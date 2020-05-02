@@ -9,11 +9,20 @@
       <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
         <HandDisplay :deck="player.hand.cards" :name="player.name" />
       </div>
+      <div class="bet">
+        <div class="chip"></div>
+        <div class="chip"></div>
+        <div class="chip"></div>
+
+        <input class="betAmount" type="text" v-model="currentBet">
+        <button>Reset</button>
+      </div>
       <div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
         <button @click="sendAction('hit')">Hit</button>
         <button @click="sendAction('stand')">Stand</button>
         <button @click="sendAction('double')">Double</button>
       </div>
+
       <div class="actions" v-else>
         <button disabled>Hit</button>
         <button disabled>Stand</button>
@@ -29,6 +38,31 @@
 </template>
 
 <style scoped lang="scss">
+.chip::before{
+  content: "100k";
+}
+.chip {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.betAmount {
+  width: 50px;
+}
+.bet{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding-right: 30%;
+  padding-left: 30%;
+  align-items: center;
+
+}
 .bottomBarItem {
   margin-right: 10px;
 }
@@ -126,18 +160,19 @@ export default {
     sendAction(action) {
       this.socket.send(
         JSON.stringify({
-          type: "move",
-          data: { user: this.currentUsername, type: action }
+          user: this.currentUsername, type: action, bet: this.currentBet
         })
       );
-    }
+    },
+    
   },
 
   data: function() {
     return {
       socket: null,
       socketOpen: false,
-      gameState: { players: [], dealerHand: { cards: [] } }
+      gameState: { players: [], dealerHand: { cards: [] } },
+      currentBet: 10
     };
   }
 };

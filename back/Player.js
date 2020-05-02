@@ -9,7 +9,7 @@ class Player {
     this.split = false;
     this.canAct = true;
     this.status = "none"; // win lose push,
-    this.bet = 10;
+    this.bet = 9999;
   }
 }
 

@@ -10,7 +10,7 @@ function handleMove(game, move) {
   }
 
   function standHandler() {
-    game.waitingFor = game.waitingFor.filter((name) => name !== player.name);
+    game.waitingFor = game.waitingFor.filter(name => name !== player.name);
     player.canAct = false;
   }
 
@@ -18,7 +18,7 @@ function handleMove(game, move) {
     player.hand.dealCards(game.deck.deal(1));
     if (player.hand.sumHand() >= 21 || player.doubled) {
       player.canAct = false;
-      game.waitingFor = game.waitingFor.filter((name) => name !== player.name);
+      game.waitingFor = game.waitingFor.filter(name => name !== player.name);
     }
   }
   function dealerMove() {
@@ -44,10 +44,13 @@ function handleMove(game, move) {
 
     });
     game.done = true;
+  }
+  function betHandler(){
+    if(!game.waitingForBets.includes(player)) return;
 
   }
-
-  if (move.type === "hit") hitHandler();
+  if(move.type === "bet") betHandler();
+  else if (move.type === "hit") hitHandler();
   else if (move.type === "stand") standHandler();
   else doubleHandler();
 

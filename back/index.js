@@ -43,31 +43,28 @@ let copyEx = new Game({ gameJSON: exampleGame.exportGame() });
 wss.on("connection", socket => {
   socket.on("message", message => {
     const action = JSON.parse(message);
-    console.log("message received");
+    console.log(action);
 
-    if (action.type === "move") {
-      //copyEx = handleMove(copyEx.exportGame(), {user: "steven", type: "hit"});
-      console.log(copyEx.dealerHand);
+    //copyEx = handleMove(copyEx.exportGame(), {user: "steven", type: "hit"});
 
-      handleMove(copyEx, action.data);
-      if (copyEx.done) {
-        setTimeout(() => {
-          copyEx.nextRound();
-          const playerJSON = copyEx.exportToPlayer();
+    handleMove(copyEx, action);
+    if (copyEx.done) {
+      setTimeout(() => {
+        copyEx.nextRound();
+        const playerJSON = copyEx.exportToPlayer();
 
-          wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
-          });
-          socket.send(copyEx.exportToPlayer());
-        }, 5000);
-      }
-      const playerJSON = copyEx.exportToPlayer();
-
-      wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
-      });
-      socket.send(copyEx.exportToPlayer());
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
+        });
+        socket.send(copyEx.exportToPlayer());
+      }, 5000);
     }
+    const playerJSON = copyEx.exportToPlayer();
+
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
+    });
+    socket.send(copyEx.exportToPlayer());
   });
   console.log("client connected");
   socket.send(copyEx.exportToPlayer());

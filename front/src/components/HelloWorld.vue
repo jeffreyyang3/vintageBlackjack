@@ -21,7 +21,7 @@
 <style scoped lang="scss">
 .bjWindow {
   width: 650px;
-  height: 500px;
+  height: 600px;
   display: flex;
   flex-direction: column;
 

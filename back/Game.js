@@ -1,19 +1,20 @@
 const { Card, Deck, Hand } = require("./Cards");
 const { Player } = require("./Player");
 
+
 class Game {
   constructor({ gameJSON, playersData }) {
     if (gameJSON) {
       this.fromJSON(gameJSON);
       return;
     }
-    this.done = false;
 
     this.deck = new Deck();
 
     this.numPlayers = playersData.length;
     this.dealerHand = new Hand();
     this.revealing = false;
+    this.betsOpen = true;
     this.dealerHand.dealCards(this.deck.deal(2));
 
     this.players = playersData.map(player => {
@@ -21,6 +22,7 @@ class Game {
     });
 
     this.waitingFor = this.players.map(player => player.name);
+    this.waitingForBets = this.players.map(player => player.name);
 
     this.players.forEach(player => {
       player.hand.dealCards(this.deck.deal(2));
@@ -29,16 +31,19 @@ class Game {
 
   nextRound() {
     this.done = false;
+    this.betsOpen = true;
     this.deck = new Deck();
     this.dealerHand = new Hand();
     this.dealerHand.dealCards(this.deck.deal(2));
     this.waitingFor = this.players.map(player => player.name);
+    this.waitingForBets = this.players.map(player => player.name);
 
     this.players.forEach(player => {
       player.hand = new Hand();
       player.hand.dealCards(this.deck.deal(2));
       player.status = "none";
       player.canAct = true;
+      player.bet = 9999;
     });
   }
 

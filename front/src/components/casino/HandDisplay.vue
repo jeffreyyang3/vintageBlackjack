@@ -1,7 +1,6 @@
 <template>
   <div class="handDisplayContainer">
-    <div class="gameText you" v-if="name == $store.state.currentUsername">★ YOU ARE HERE</div>
-
+    <div class="gameText you active" v-if="name === $store.state.currentUsername">YOU ARE HERE</div>
     <div class="gameText you" v-else></div>
     <div class="gameText">{{ name }}</div>
     <div class="cards">
@@ -29,8 +28,14 @@
   text-decoration: line-through;
 }
 .gameText.you {
-  color: red;
   height: 15px;
+  font-size: 150%
+}
+
+.gameText.you.active::before {
+  content: "★";
+  color: red;
+
 }
 .handDisplayContainer {
   height: 100%;
