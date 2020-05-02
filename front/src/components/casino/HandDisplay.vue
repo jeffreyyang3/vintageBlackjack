@@ -1,5 +1,8 @@
 <template>
   <div class="handDisplayContainer">
+    <div class="gameText you" v-if="name == $store.state.currentUsername">★ YOU ARE HERE</div>
+
+    <div class="gameText you" v-else></div>
     <div class="gameText">{{ name }}</div>
     <div class="cards">
       <img
@@ -24,6 +27,10 @@
 
 .gameText.lose {
   text-decoration: line-through;
+}
+.gameText.you {
+  color: red;
+  height: 15px;
 }
 .handDisplayContainer {
   height: 100%;
