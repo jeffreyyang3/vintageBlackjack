@@ -46,10 +46,13 @@ function handleMove(game, move) {
     game.done = true;
   }
   function betHandler(){
-    if(!game.waitingForBets.includes(player)) return;
-
+    if(!game.waitingForBets.includes(player)){
+      player.bet = move.bet;
+      game.waitingForBets = game.waitingForBets.filter(x => x !== player.name);
+    };
+    if(move.type !== "bet") console.log("synch problem in bet stage");
   }
-  if(move.type === "bet") betHandler();
+  if(game.waitingForBets.length) betHandler();
   else if (move.type === "hit") hitHandler();
   else if (move.type === "stand") standHandler();
   else doubleHandler();

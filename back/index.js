@@ -66,7 +66,7 @@ wss.on("connection", socket => {
     });
     socket.send(copyEx.exportToPlayer());
   });
-  console.log("client connected");
+  console.log("client connectedd");
   socket.send(copyEx.exportToPlayer());
 });
 

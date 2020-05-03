@@ -7,34 +7,30 @@
     </div>
     <div class="lowerHalf">
       <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
-        <HandDisplay :deck="player.hand.cards" :name="player.name" />
+        <HandDisplay :deck="player.hand.cards" :name="player.name" :money="player.money"/>
       </div>
-      <div class="bet">
+      <div class="bet lowerButtons" v-if="displayBet">
         <div class="chip"></div>
         <div class="chip"></div>
         <div class="chip"></div>
-
         <input class="betAmount" type="text" v-model="currentBet">
-        <button>Reset</button>
+        <button @click="sendAction('bet')">Bet</button>
       </div>
-      <div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
+      <div class="actions lowerButtons" v-else-if="displayActions">
         <button @click="sendAction('hit')">Hit</button>
         <button @click="sendAction('stand')">Stand</button>
         <button @click="sendAction('double')">Double</button>
       </div>
 
-      <div class="actions" v-else>
+      <div class="actions lowerButtons" v-else>
         <button disabled>Hit</button>
         <button disabled>Stand</button>
         <button disabled>Double</button>
       </div>
 
-      <!-- <HandDisplay :deck="exHand" />
-      <HandDisplay :deck="exHand" />
-      <HandDisplay :deck="exHand" />-->
       
+      </div>
     </div>
-  </div>
 </template>
 
 <style scoped lang="scss">
@@ -51,16 +47,23 @@
   justify-content: center;
 
 }
+
+.lowerButtons {
+  height: 40px
+
+}
 .betAmount {
   width: 50px;
 }
 .bet{
+
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  padding-right: 30%;
-  padding-left: 30%;
+  padding-right: 20%;
+  padding-left: 20%;
   align-items: center;
+  padding-bottom: 10px;
 
 }
 .bottomBarItem {
@@ -125,7 +128,19 @@ export default {
   },
   computed: {
 
+      //<div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
     ...mapState(["currentUsername"]),
+    displayBet: function(){
+      return this.socketOpen && this.currentPlayer && 
+      this.gameState.waitingForBets.indexOf(this.currentUsername) !== -1
+
+    },
+    displayActions: function(){
+      return this.socketOpen && this.currentPlayer && this.currentPlayer.canAct
+      && !this.gameState.waitingForBets.length;
+
+    },
+
     currentPlayer: function() {
       console.log(this.currentUsername)
       return this.gameState.players.filter(
@@ -160,7 +175,7 @@ export default {
     sendAction(action) {
       this.socket.send(
         JSON.stringify({
-          user: this.currentUsername, type: action, bet: this.currentBet
+          user: this.currentUsername, type: action, bet: Number(this.currentBet)
         })
       );
     },
@@ -172,7 +187,7 @@ export default {
       socket: null,
       socketOpen: false,
       gameState: { players: [], dealerHand: { cards: [] } },
-      currentBet: 10
+      currentBet: 20
     };
   }
 };

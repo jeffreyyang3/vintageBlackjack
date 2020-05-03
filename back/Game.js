@@ -43,7 +43,7 @@ class Game {
       player.hand.dealCards(this.deck.deal(2));
       player.status = "none";
       player.canAct = true;
-      player.bet = 9999;
+      player.bet = 10;
     });
   }
 
@@ -54,12 +54,15 @@ class Game {
       waitingFor,
       deck,
       dealerHand,
-      players
+      players,
+      waitingForBets
     } = JSON.parse(gameJSON);
 
     this.numPlayers = numPlayers;
     this.revealing = revealing;
     this.waitingFor = waitingFor;
+
+    this.waitingForBets = waitingForBets;
     this.deck = new Deck(deck.cards);
     this.dealerHand = new Hand(dealerHand.cards);
     this.players = players.map(player => {
@@ -75,6 +78,14 @@ class Game {
   exportToPlayer() {
     const filtered = JSON.parse(JSON.stringify(this));
     filtered.dealerHand.cards = this.obscuredDealerHand();
+    if(this.waitingForBets.length){
+      filtered.players.forEach(player => {
+        player.hand.cards = [
+          {num: 420, suit: "hidden"},
+          {num: 420, suit: "hidden"}
+        ]
+      });
+    }
     delete filtered.deck;
     return JSON.stringify(filtered);
   }

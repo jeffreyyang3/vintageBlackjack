@@ -2,7 +2,9 @@
   <div class="handDisplayContainer">
     <div class="gameText you active" v-if="name === $store.state.currentUsername">YOU ARE HERE</div>
     <div class="gameText you" v-else></div>
-    <div class="gameText">{{ name }}</div>
+    <div class="gameText" v-if="name !== 'Dealer'">{{ name }} - ${{ money }}</div>
+
+    <div class="gameText" v-else>Dealer</div>
     <div class="cards">
       <img
         v-for="(card, idx) in deck"
@@ -90,7 +92,7 @@ export default {
         }
       }
 
-      return total;
+      return total === 0 ? ":)" : total;
     }
   },
   methods: {
@@ -112,11 +114,10 @@ export default {
   },
   props: {
     deck: Array,
-    name: String
+    name: String,
+    money: Number
   },
   mounted() {
-    console.log("hand display given");
-    console.log(this.deck);
   }
 };
 </script>
