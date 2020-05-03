@@ -191,9 +191,17 @@ export default {
       this.socketOpen = true;
       this.socket.onmessage = event => {
 
-        console.log(JSON.parse(event.data));
-        document.getElementById("hitmarker").play()
         this.gameState = JSON.parse(event.data);
+
+        console.log(JSON.parse(event.data));
+        if(this.gameState.done){
+          document.getElementById("xpshutdown").play()
+        } else if (this.gameState.isNewGame){
+          document.getElementById("xpstartup").play()
+        } else {
+          document.getElementById("hitmarker").play()
+        }
+
 
       };
     };

@@ -56,7 +56,10 @@ wss.on("connection", socket => {
         wss.clients.forEach(client => {
           if (client.readyState === WebSocket.OPEN) client.send(playerJSON);
         });
-        socket.send(copyEx.exportToPlayer());
+        //socket.send(copyEx.exportToPlayer());
+        socket.send(
+          JSON.stringify({isNewGame: true, ...JSON.parse(copyEx.exportToPlayer())})
+        );
       }, 5000);
     }
     const playerJSON = copyEx.exportToPlayer();

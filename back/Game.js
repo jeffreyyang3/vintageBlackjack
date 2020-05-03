@@ -23,6 +23,7 @@ class Game {
 
     this.waitingFor = this.players.map(player => player.name);
     this.waitingForBets = this.players.map(player => player.name);
+    this.done = false;
 
     this.players.forEach(player => {
       player.hand.dealCards(this.deck.deal(2));
@@ -40,6 +41,7 @@ class Game {
 
     this.players.forEach(player => {
       player.hand = new Hand();
+      player.doubled = false;
       player.hand.dealCards(this.deck.deal(2));
       player.status = "none";
       player.canAct = true;

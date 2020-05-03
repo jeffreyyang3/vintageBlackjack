@@ -38,9 +38,8 @@ function handleMove(game, move) {
        player.status = "push";
       }
 
-      if(player.status === "win") player.money += player.bet;
-
-      if(player.status === "lose") player.money -= player.bet;
+      if(player.status === "win") player.money += (player.doubled ? player.bet * 2 : player.bet);
+      if(player.status === "lose") player.money -= (player.doubled ? player.bet * 2 : player.bet);
 
     });
     game.done = true;
