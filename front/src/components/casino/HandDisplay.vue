@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .gameText {
   margin-top: 10px;
   font-size: 180%;

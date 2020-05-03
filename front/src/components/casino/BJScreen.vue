@@ -5,6 +5,9 @@
         <HandDisplay :deck="gameState.dealerHand.cards" :name="'Dealer'" />
       </div>
     </div>
+    <div class="infoBar gameText">
+      {{ infoBarText}}
+    </div>
     <div class="lowerHalf">
       <div class="playerContainer" v-for="player in gameState.players" :key="player.name">
         <HandDisplay :deck="player.hand.cards" :name="player.name" :money="player.money"/>
@@ -34,6 +37,10 @@
 </template>
 
 <style scoped lang="scss">
+.infoBar {
+  text-align: center;
+
+}
 .chip::before{
   content: "100k";
 }
@@ -95,25 +102,30 @@
   flex-flow: wrap;
   align-items: flex-end;
   justify-content: space-evenly;
-  height: 50%;
+  height: 45%;
 }
 
 .lowerHalf,
-.upperHalf {
+.upperHalf,
+.infoBar {
   width: 100%;
 }
+.infoBar {
+  height: 10%;
 
+}
 .upperHalf {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50%;
+  height: 45%;
 }
 </style>
 
 <script>
 import { mapState } from "vuex";
 import HandDisplay from "@/components/casino/HandDisplay.vue";
+import {Howl, Howler} from 'howler';
 const axios = require("axios");
 export default {
   name: "BJScreen",
@@ -130,6 +142,20 @@ export default {
 
       //<div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
     ...mapState(["currentUsername"]),
+    infoBarText: function(){
+      let text = "Waiting On: ";
+      if(!this.hasGameState) return "Loading";
+      if(this.gameState.waitingForBets.length)
+        return text + this.gameState.waitingForBets.join(", ");
+      if(this.gameState.waitingFor.length)
+        return text + this.gameState.waitingFor.join(", ")
+
+
+
+    },
+    hasGameState: function(){
+      return this.gameState.waitingForBets !== undefined
+    },
     displayBet: function(){
       return this.socketOpen && this.currentPlayer && 
       this.gameState.waitingForBets.indexOf(this.currentUsername) !== -1
@@ -151,7 +177,6 @@ export default {
       const out = [this.currentUsername];
       if (this.currentPlayer){
         out.push(`$${this.currentPlayer.money}`);
-        console.log(this.currentPlayer)
         if (this.currentPlayer.status === "win") out.push("Won");
         if (this.currentPlayer.status === "lose") out.push("Lost");
         if (this.currentPlayer.status === "push") out.push("Pushed")
@@ -165,8 +190,11 @@ export default {
     this.socket.onopen = _ => {
       this.socketOpen = true;
       this.socket.onmessage = event => {
+
         console.log(JSON.parse(event.data));
+        document.getElementById("hitmarker").play()
         this.gameState = JSON.parse(event.data);
+
       };
     };
   },
