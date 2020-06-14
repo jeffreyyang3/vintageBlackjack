@@ -1,7 +1,6 @@
 const { Card, Deck, Hand } = require("./Cards");
 const { Player } = require("./Player");
 
-
 class Game {
   constructor({ gameJSON, playersData }) {
     if (gameJSON) {
@@ -17,15 +16,15 @@ class Game {
     this.betsOpen = true;
     this.dealerHand.dealCards(this.deck.deal(2));
 
-    this.players = playersData.map(player => {
+    this.players = playersData.map((player) => {
       return new Player(player.name, player.money);
     });
 
-    this.waitingFor = this.players.map(player => player.name);
-    this.waitingForBets = this.players.map(player => player.name);
+    this.waitingFor = this.players.map((player) => player.name);
+    this.waitingForBets = this.players.map((player) => player.name);
     this.done = false;
 
-    this.players.forEach(player => {
+    this.players.forEach((player) => {
       player.hand.dealCards(this.deck.deal(2));
     });
   }
@@ -36,10 +35,10 @@ class Game {
     this.deck = new Deck();
     this.dealerHand = new Hand();
     this.dealerHand.dealCards(this.deck.deal(2));
-    this.waitingFor = this.players.map(player => player.name);
-    this.waitingForBets = this.players.map(player => player.name);
+    this.waitingFor = this.players.map((player) => player.name);
+    this.waitingForBets = this.players.map((player) => player.name);
 
-    this.players.forEach(player => {
+    this.players.forEach((player) => {
       player.hand = new Hand();
       player.doubled = false;
       player.hand.dealCards(this.deck.deal(2));
@@ -57,7 +56,7 @@ class Game {
       deck,
       dealerHand,
       players,
-      waitingForBets
+      waitingForBets,
     } = JSON.parse(gameJSON);
 
     this.numPlayers = numPlayers;
@@ -67,7 +66,7 @@ class Game {
     this.waitingForBets = waitingForBets;
     this.deck = new Deck(deck.cards);
     this.dealerHand = new Hand(dealerHand.cards);
-    this.players = players.map(player => {
+    this.players = players.map((player) => {
       player.hand = new Hand(player.hand.cards);
       return player;
     });
@@ -80,12 +79,12 @@ class Game {
   exportToPlayer() {
     const filtered = JSON.parse(JSON.stringify(this));
     filtered.dealerHand.cards = this.obscuredDealerHand();
-    if(this.waitingForBets.length){
-      filtered.players.forEach(player => {
+    if (this.waitingForBets.length) {
+      filtered.players.forEach((player) => {
         player.hand.cards = [
-          {num: 420, suit: "hidden"},
-          {num: 420, suit: "hidden"}
-        ]
+          { num: 420, suit: "hidden" },
+          { num: 420, suit: "hidden" },
+        ];
       });
     }
     delete filtered.deck;
@@ -104,5 +103,5 @@ class Game {
 }
 
 module.exports = {
-  Game
+  Game,
 };

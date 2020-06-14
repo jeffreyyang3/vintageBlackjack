@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "devup": "docker-compose -f docker-compose.dev.yml up --build",
-    "devdown": "docker-compose -f docker-compose.dev.yml down"
-  }
-}
