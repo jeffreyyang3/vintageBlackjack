@@ -29,6 +29,15 @@ class Game {
     });
   }
 
+  addPlayer({ username, money }) {
+    console.log("in addplayer", username);
+    const player = new Player(username, money);
+    console.log(player);
+    player.hand.dealCards(this.deck.deal(2));
+    this.players.push(player);
+    this.numPlayers++;
+  }
+
   nextRound() {
     this.done = false;
     this.betsOpen = true;

@@ -1,5 +1,9 @@
 <template>
-  <div class="createOrJoin">create or join</div>
+  <div class="createOrJoin">
+    <input type="text" v-model="gameName" />
+    <button @click="createGame">create game</button>
+    <button @click="joinGame">joinGame</button>
+  </div>
 </template>
 <style scoped lang="scss"></style>
 
@@ -22,18 +26,37 @@ export default Vue.extend({
   methods: {
     async createGame() {
       const res = await axios.post("/api/createGame", {
-        creatorName: "coolman",
-        gameName: "coolgame"
+        creatorUsername: this.$store.state.currentUsername,
+        gameName: this.gameName
       });
       console.log(res.data);
+      if (res.data.gameName) {
+        this.joinGame();
+      }
+    },
+
+    async joinGame() {
+      const res = await axios.get("/api/joinGame", {
+        params: {
+          gameName: this.gameName,
+          username: this.$store.state.currentUsername
+        }
+      });
+      if (res.data.success) {
+        this.$set(this.$store.state, "currentGameName", res.data.gameName);
+        //this.$store.state.currentGameName = res.data.gameName;
+        return;
+
+        //this.$router.push({ path: "/" });
+      }
+      console.log("error joining");
+      console.log(res);
     }
   },
 
-  props: {},
+  props: { onOwnPage: Boolean },
   computed: {},
-  mounted() {
-    this.createGame();
-  }
+  mounted() {}
 });
 </script>
 

@@ -1,5 +1,7 @@
 //import { Card, Deck, Hand } from "./Cards";
 const { Card, Deck, Hand } = require("./Cards");
+
+const { Player } = require("./Player");
 const url = require("url");
 const { Game } = require("./Game");
 const { handleMove } = require("./MoveHandlers");
@@ -17,21 +19,25 @@ const games = {};
 const playerWebSockets = {};
 function createGame(params) {
   const { gameName, private, password, creatorUsername } = params;
+
   if (games[gameName]) return { error: "game already exists" };
   games[gameName] = new Game({
-    playersData: [
-      { name: creatorUsername, money: 100, wager: 5 },
-      { name: "dummy", money: 100, wager: 5 },
-    ],
+    playersData: [{ name: creatorUsername, money: 100, wager: 5 }],
   });
+
   playerWebSockets[gameName] = {};
   console.log("created " + gameName);
   return { gameName };
 }
 
 function joinGame(params) {
-  const { gameName, private, password, creatorUsername } = params;
-  if (!games[gameName]) return { error: "game does not exist" };
+  console.log(params);
+  const { gameName, private, password, username } = params;
+  const currGame = games[gameName];
+  if (!currGame) return { error: "game does not exist" };
+  if (!currGame.players.filter((player) => player.name === username).length)
+    currGame.addPlayer({ username, money: 100 });
+  //currGame.players.push(new Player(username, 100));
 
   return { success: true, gameName };
 }
@@ -44,17 +50,17 @@ app.get("/", (req, res) => {
 app.post("/api/createGame", (req, res) => {
   res.send(createGame(req.body));
 });
-app.post("/api/joinGame", (req, res) => {
-  res.send(joinGame(req.body));
+app.get("/api/joinGame", (req, res) => {
+  res.send(joinGame(req.query));
 });
-createGame({
-  gameName: "exname",
-  private: false,
-  password: "",
-  creatorUsername: "playername",
+// createGame({
+//   gameName: "exname",
+//   private: false,
+//   password: "",
+//   creatorUsername: "playername",
 
-  // const { gameName, private, password, creatorUsername } = params;
-});
+//   // const { gameName, private, password, creatorUsername } = params;
+// });
 app.listen(6998, () => {
   console.log("http on 6998");
 });
@@ -66,29 +72,22 @@ function getGame(params) {
 
 //import { Player } from "./Player";
 
-const deck = new Deck();
-const hand = new Hand();
-let gameCounter = 0;
-
-const exampleGame = new Game({
-  gameJSON: false,
-  gameID: 0,
-  playersData: ["rachel", "chris", "jef"].map((name) => {
-    return {
-      name,
-      money: 100,
-      wager: 5,
-    };
-  }),
-});
-
-let copyEx = new Game({ gameJSON: exampleGame.exportGame() });
+// const exampleGame = new Game({
+//   gameJSON: false,
+//   gameID: 0,
+//   playersData: ["rachel", "chris", "jef"].map((name) => {
+//     return {
+//       name,
+//       money: 100,
+//       wager: 5,
+//     };
+//   }),
+// });
 
 wss.on("connection", (socket, req) => {
   const params = url.parse(req.url, true).query;
   const { username, gameName } = params;
   const currGame = getGame(params);
-  console.log(`gamename is ${gameName}`);
   const currGameSockets = playerWebSockets[gameName];
   currGameSockets[username] = socket;
 

@@ -125,11 +125,15 @@ export default {
   watch: {
     userInfo() {
       this.$store.state.userInfo = [...this.userInfo];
+    },
+    "$store.state.currentGameName": function() {
+      this.switchGame();
     }
   },
   computed: {
     //<div class="actions" v-if="socketOpen && currentPlayer && currentPlayer.canAct">
     ...mapState(["currentUsername"]),
+
     infoBarText: function() {
       let text = "Waiting On: ";
       if (!this.hasGameState) return "Loading";
@@ -176,24 +180,7 @@ export default {
     }
   },
   mounted() {
-    this.socket = new WebSocket(
-      `ws://${window.location.hostname}/ws?username=jef&gameName=exname`
-    );
-    this.socket.onopen = _ => {
-      this.socketOpen = true;
-      this.socket.onmessage = event => {
-        this.gameState = JSON.parse(event.data);
-
-        console.log(JSON.parse(event.data));
-        if (this.gameState.done) {
-          document.getElementById("xpshutdown").play();
-        } else if (this.gameState.isNewGame) {
-          document.getElementById("xpstartup").play();
-        } else {
-          document.getElementById("hitmarker").play();
-        }
-      };
-    };
+    //this.initGame();
   },
 
   methods: {
@@ -205,6 +192,30 @@ export default {
           bet: Number(this.currentBet)
         })
       );
+    },
+    initGame() {
+      this.socket = new WebSocket(
+        `ws://${window.location.hostname}/ws?username=${this.$store.state.currentUsername}` +
+          `&gameName=${this.$store.state.currentGameName}`
+      );
+      this.socket.onopen = _ => {
+        this.socketOpen = true;
+        this.socket.onmessage = event => {
+          this.gameState = JSON.parse(event.data);
+          console.log(JSON.parse(event.data));
+          // if (this.gameState.done) {
+          //   document.getElementById("xpshutdown").play();
+          // } else if (this.gameState.isNewGame) {
+          //   document.getElementById("xpstartup").play();
+          // } else {
+          //   document.getElementById("hitmarker").play();
+          // }
+        };
+      };
+    },
+    switchGame() {
+      this.socket && this.socket.close();
+      this.initGame();
     }
   },
 
