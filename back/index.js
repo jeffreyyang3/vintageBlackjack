@@ -5,7 +5,6 @@ const { Game } = require("./Game");
 const { handleMove } = require("./MoveHandlers");
 const app = require("express")();
 
-const fs = require("fs");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 //const server = require("express")();
@@ -20,9 +19,13 @@ function createGame(params) {
   const { gameName, private, password, creatorUsername } = params;
   if (games[gameName]) return { error: "game already exists" };
   games[gameName] = new Game({
-    playersData: [{ name: creatorUsername, money: 100, wager: 5 }],
+    playersData: [
+      { name: creatorUsername, money: 100, wager: 5 },
+      { name: "dummy", money: 100, wager: 5 },
+    ],
   });
   playerWebSockets[gameName] = {};
+  console.log("created " + gameName);
   return { gameName };
 }
 
@@ -44,7 +47,14 @@ app.post("/api/createGame", (req, res) => {
 app.post("/api/joinGame", (req, res) => {
   res.send(joinGame(req.body));
 });
+createGame({
+  gameName: "exname",
+  private: false,
+  password: "",
+  creatorUsername: "playername",
 
+  // const { gameName, private, password, creatorUsername } = params;
+});
 app.listen(6998, () => {
   console.log("http on 6998");
 });
@@ -78,6 +88,7 @@ wss.on("connection", (socket, req) => {
   const params = url.parse(req.url, true).query;
   const { username, gameName } = params;
   const currGame = getGame(params);
+  console.log(`gamename is ${gameName}`);
   const currGameSockets = playerWebSockets[gameName];
   currGameSockets[username] = socket;
 

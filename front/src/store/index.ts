@@ -10,10 +10,12 @@ const state: {
   }>;
   currentUsername: string;
   userInfo: Array<string>;
+  currentGameName: string;
 } = {
   displayedMessages: [],
-  currentUsername: "jef",
-  userInfo: []
+  currentUsername: "playername",
+  userInfo: [],
+  currentGameName: ""
 
 };
 
