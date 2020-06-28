@@ -127,6 +127,7 @@ export default {
       this.$store.state.userInfo = [...this.userInfo];
     },
     "$store.state.currentGameName": function() {
+      alert("switching");
       this.switchGame();
     }
   },
@@ -203,13 +204,6 @@ export default {
         this.socket.onmessage = event => {
           this.gameState = JSON.parse(event.data);
           console.log(JSON.parse(event.data));
-          // if (this.gameState.done) {
-          //   document.getElementById("xpshutdown").play();
-          // } else if (this.gameState.isNewGame) {
-          //   document.getElementById("xpstartup").play();
-          // } else {
-          //   document.getElementById("hitmarker").play();
-          // }
         };
       };
     },

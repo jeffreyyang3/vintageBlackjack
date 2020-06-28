@@ -9,21 +9,19 @@ class Game {
     }
 
     this.deck = new Deck();
-
     this.numPlayers = playersData.length;
+    this.round = 0;
     this.dealerHand = new Hand();
     this.revealing = false;
     this.betsOpen = true;
     this.dealerHand.dealCards(this.deck.deal(2));
-
     this.players = playersData.map((player) => {
       return new Player(player.name, player.money);
     });
-
+    this.waitingPlayers = [];
     this.waitingFor = this.players.map((player) => player.name);
     this.waitingForBets = this.players.map((player) => player.name);
     this.done = false;
-
     this.players.forEach((player) => {
       player.hand.dealCards(this.deck.deal(2));
     });
@@ -46,6 +44,7 @@ class Game {
     this.dealerHand.dealCards(this.deck.deal(2));
     this.waitingFor = this.players.map((player) => player.name);
     this.waitingForBets = this.players.map((player) => player.name);
+    this.round++;
 
     this.players.forEach((player) => {
       player.hand = new Hand();
@@ -66,9 +65,12 @@ class Game {
       dealerHand,
       players,
       waitingForBets,
+      round,
+      waitingPlayers
     } = JSON.parse(gameJSON);
 
     this.numPlayers = numPlayers;
+    this.waitingPlayers = waitingPlayers;
     this.revealing = revealing;
     this.waitingFor = waitingFor;
 
@@ -79,6 +81,7 @@ class Game {
       player.hand = new Hand(player.hand.cards);
       return player;
     });
+    this.round = round
   }
 
   exportGame() {

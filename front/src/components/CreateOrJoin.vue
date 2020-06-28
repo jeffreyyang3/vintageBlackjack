@@ -44,6 +44,7 @@ export default Vue.extend({
       });
       if (res.data.success) {
         this.$set(this.$store.state, "currentGameName", res.data.gameName);
+        console.log("set to", this.$store.state.currentGameName);
         //this.$store.state.currentGameName = res.data.gameName;
         return;
 
