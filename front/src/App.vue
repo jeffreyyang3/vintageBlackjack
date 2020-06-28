@@ -4,7 +4,6 @@
       hi my name is
       <input type="text" v-model="$store.state.currentUsername" />
     </h3>
-    <CreateOrJoin />
 
     <button class="fake" onclick="alert('No')">turn off hitmarker sound</button>
     <!-- <div id="nav">
@@ -17,10 +16,8 @@
 <script>
 import { mapState } from "vuex";
 import css from "98.css";
-import CreateOrJoin from "@/components/CreateOrJoin";
 export default {
   components: {
-    CreateOrJoin
   }
   // computed: {
   //   ...mapState(["currentUsername"])

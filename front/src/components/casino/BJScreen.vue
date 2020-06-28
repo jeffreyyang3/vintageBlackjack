@@ -181,7 +181,7 @@ export default {
     }
   },
   mounted() {
-    //this.initGame();
+    this.initGame();
   },
 
   methods: {
@@ -190,6 +190,7 @@ export default {
         JSON.stringify({
           user: this.currentUsername,
           type: action,
+
           bet: Number(this.currentBet)
         })
       );

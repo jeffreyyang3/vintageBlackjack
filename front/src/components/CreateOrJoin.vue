@@ -46,6 +46,7 @@ export default Vue.extend({
         this.$set(this.$store.state, "currentGameName", res.data.gameName);
         console.log("set to", this.$store.state.currentGameName);
         //this.$store.state.currentGameName = res.data.gameName;
+        if(this.onOwnPage) this.$router.push({path: "/game"});
         return;
 
         //this.$router.push({ path: "/" });
