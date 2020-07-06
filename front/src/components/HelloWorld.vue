@@ -27,12 +27,7 @@
 
 
 }
-.contentContainer {
-  padding-left: 2px;
-  flex-grow: 1;
-  padding-right: 2px;
-  margin-bottom: 4px;
-}
+
 
 .options {
   padding: 4px 0 4px 2px;
@@ -61,10 +56,7 @@ export default Vue.extend({
     ...mapState(["userInfo"]),
     barInfo(){
       return ["Blackjack", ...this.userInfo].join(" - ")
-
     }
-
-
 
   },
   mounted() {}

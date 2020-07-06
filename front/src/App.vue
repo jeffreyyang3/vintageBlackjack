@@ -1,15 +1,5 @@
 <template>
   <div id="app">
-    <h3>
-      hi my name is
-      <input type="text" v-model="$store.state.currentUsername" />
-    </h3>
-
-    <button class="fake" onclick="alert('No')">turn off hitmarker sound</button>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
     <router-view />
   </div>
 </template>

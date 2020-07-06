@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
-import CreateOrJoin from "@/components/CreateOrJoin.vue"
+import CreateOrJoin from "@/components/CreateOrJoin.vue";
+import Entry from "@/views/Entry.vue";
 
 Vue.use(VueRouter)
 
@@ -11,10 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'homeCreate',
-    component: CreateOrJoin,
-    props: {
-      onOwnPage: true
-    }
+    component: Entry,
   },
   {
     path: '/game',

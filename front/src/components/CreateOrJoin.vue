@@ -1,11 +1,72 @@
 <template>
   <div class="createOrJoin">
-    <input type="text" v-model="gameName" />
-    <button @click="createGame">create game</button>
-    <button @click="joinGame">joinGame</button>
+    <div class="upperContent">
+      <div class="textFields">
+        <div class="textPair">
+          Game Name:
+          <input type="text" v-model="gameName" />
+        </div>
+        <div class="textPair">
+          Game Name:
+          <input type="text" v-model="gameName" />
+        </div>
+        <div class="textPair">
+          Game Name:
+          <input type="text" v-model="gameName" />
+        </div>
+      </div>
+      <div class="verticalLine"></div>
+    </div>
+    <div class="bottomButtons">
+      <button @click="createGame">create game</button>
+      <button @click="joinGame">joinGame</button>
+    </div>
+
+
   </div>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.createOrJoin {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.verticalLine {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: pink;
+  height: 70%;
+  width: 1px;
+
+}
+
+.upperContent {
+  input {
+    width: 150px;
+  }
+  height: 70%;
+  display: flex;
+}
+
+.bottomButtons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row-reverse;
+  button {
+    margin-left: 6px;
+
+  }
+}
+
+.textFields {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+</style>
 
 <script>
 import Vue from "vue";
@@ -62,4 +123,4 @@ export default Vue.extend({
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only -->  ````12
